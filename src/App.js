@@ -10,30 +10,36 @@ import './components/Login.css';
 import Gallery from './components/Gallery';
 import Login from './components/Login'
 import { ArtMap } from './components/Map';
+import Form from './components/Form';
 import backgroundGradFx from './FX/LightToggle';
 import { lightSet } from './FX/LightToggle'
 
 const toggleOn = require('./imgs/switch.svg');
 const toggleOff = require('./imgs/switch (1).svg');
+const upload = require('./imgs/noun_Upload_128405235.png');
+const gallery = require('./imgs/noun_Art_17569451234.png');
+const map = require('./imgs/noun_Map_9721412.png');
 
 function App() {
   return (
     <CookiesProvider>
       <Router>
         <div className="App" >
-          <div>
+          <div className="nav-links">
             <header className="App-header" >
-              <Link to="/"> <h3> Art Map</h3> </Link>
-              <Link to="/gallery/"> <p> Gallery</p> </Link>
-              <Link to="/login/"> <p> Login</p> </Link>
+              <Link to="/"> <img src={map} className="nav-btn"></img> </Link>
+              <Link to="/gallery/"> <img src={gallery} className="nav-btn"></img> </Link>
+              <Link to="/form/"> <img src={upload} className="nav-btn"></img> </Link>
+              {/* <Link to="/login/"> <p> Login</p> </Link> */}
               <img src={toggleOn} className="toggle-light-btn" onClick={toggleLight} />
             </header>
+              <Login/>
           </div>
         </div>
         <Switch>
           <Route exact path="/" component={ArtMap} />
           <Route path="/gallery/" component={Gallery} />
-          <Route path="/login/" component={Login} />
+          <Route path="/form/" component={Form} />
         </Switch>
       </Router>
     </CookiesProvider>

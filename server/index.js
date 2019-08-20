@@ -32,7 +32,8 @@ async function fetchData() {
         id serial primary key,
         username varchar not null,
         password varchar not null,
-        name varchar not null
+        name varchar not null,
+        admin boolean not null
         );`)
     const res = await client.query('select * from Users');
     console.log(res);
@@ -67,29 +68,6 @@ app.get('/refreshUsersTable', async (req, res) => {
 
     // res.end();
 });
-
-// app.get('/create', async (req, res) => {
-//     await client.query(`create table if not exists Users (
-//             id serial primary key,
-//         username varchar not null unique,
-//         password varchar not null,
-//         name varchar not null
-//         );`)
-
-//     res.end();
-// });
-
-// app.get('/createuser', async (req, res) => {
-//     await client.query(`create table if not exists Users (
-//             id serial primary key,
-//             username varchar not null unique,
-//             password varchar not null,
-//             name varchar not null
-//             admin boolean not null
-//             );`)
-//     await client.query(`insert into Users(username, password, name) values ('admin', 'secret', 'Admin', 'true')`);
-//     res.end();
-// });
 
 app.get('/deleteUsers', async (req, res) => {
     await client.query('DROP TABLE Users');

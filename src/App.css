@@ -10,15 +10,23 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 10vh;
-  min-width: 100%;
+  /* max-width: 80%; */
+  min-width: 80%;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
   justify-content: space-around;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.nav-links{
+  background-color: #282c34;
+  min-height: 10vh;
+  min-width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
 }
 
 .App-header p {
@@ -56,4 +64,13 @@
 .toggle-light-btn {
   height: auto;
   width: 1em;
+}
+
+.nav-btn {
+  height: auto;
+  width: 2.2em;
+}
+
+@media (max-width: 700px) {
+
 }

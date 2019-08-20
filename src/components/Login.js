@@ -1,12 +1,13 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useRef } from 'react';
 import { useCookies } from 'react-cookie';
+
+let user;
 
 const initialState = {
   username : '',
   password : '',
   isLoading : false,
   error : '',
-  LoggedIn : false,
 }
 
 function loginReducer(state, action) {
@@ -17,15 +18,9 @@ function loginReducer(state, action) {
         isLoading: true,
         error: '',
       }
-    case 'loggedIn':
-      return {
-        ...state,
-        LoggedIn: true,
-      }
     case 'logout':
       return {
         ...state,
-        LoggedIn: false,
         isLoading: false,
         username: '',
         password: '',
@@ -57,8 +52,8 @@ function loginReducer(state, action) {
 
 function Login() {
   const [state, dispatch] = useReducer(loginReducer, initialState);
-  const [cookies, setCookie, removeCookie] = useCookies(['name']);
-  const {username, password, isLoading, error, LoggedIn} = state;
+  const [cookies, setCookie, removeCookie] = useCookies();
+  const {username, password, isLoading, error} = state;
 
   useEffect(()=>{
     if(/\s/gm.test(username)) {
@@ -66,15 +61,20 @@ function Login() {
     }
   }, [username, password])
 
+  useEffect(() => {
+    user = localStorage.getItem('user');
+    console.log(user);
+  }, [cookies]);
+
 
   const submitLogin = async (e) => {
     e.preventDefault();
     dispatch({ type: 'login' });
     try {
       const validated = await validation(username, password);
+      localStorage.setItem('user', validated.name);
       setCookie('user', validated.id);
       if(validated) {
-        dispatch({ type: 'loggedIn' })
       }
     } catch (error) {
       dispatch({ type: 'error' });
@@ -83,10 +83,14 @@ function Login() {
 
   return (
     <div id="login-page" className="login-page">
-      {LoggedIn ?
+      {cookies.user ?
         <div>
           <h1> Hello {username}</h1>
-          <button onClick={() => dispatch({ type: 'logout' })}>Log out</button>
+          <button onClick={() => {
+            removeCookie('user');
+            localStorage.removeItem('user');
+            dispatch({ type: 'logout' });
+            }}>Log out</button>
         </div> :
         <form id="login-form">
           {<p className="error">{error}</p>}
@@ -130,8 +134,6 @@ function Login() {
 }
 
 async function validation(username, password) {
-  // return new Promise((resolve, reject) => {
-  console.log('data before fetch', JSON.stringify({ username, password }), password);
   let userData;  
   await fetch('/api/login', {
       method: 'post',
@@ -141,16 +143,8 @@ async function validation(username, password) {
       body: JSON.stringify({ username, password })
     }).then(response => response.json())
     .then(data => userData = data)
-    console.log('userData', userData);
     return userData;
-    // setTimeout(() => {
-    //   if (username === 'artmap' && password === 'secret') {
-    //     resolve();
-    //   } else {
-    //     reject();
-    //   }
-    // }, 1000);
-  // });
 }
+
 
 export default Login;

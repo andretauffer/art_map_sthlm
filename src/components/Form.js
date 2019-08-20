@@ -1,10 +1,10 @@
-import low from 'lowdb';
-import LocalStorage from 'lowdb/adapters/LocalStorage';
+// import low from 'lowdb';
+// import LocalStorage from 'lowdb/adapters/LocalStorage';
 import React from 'react';
 import addMarker from './Map';
 
-const adapter = new LocalStorage('db');
-const db = low(adapter);
+// const adapter = new LocalStorage('db');
+// const db = low(adapter);
 let imgSrc = '';
 
 function InsertForm(props) {
@@ -71,9 +71,9 @@ function captureData() {
       imageRef: imgSrc, title, longitude, latitude, description: desc,
     };
 
-    db.get('items')
-      .push(item)
-      .write();
+    // db.get('items')
+    //   .push(item)
+    //   .write();
 
     document.querySelector('#image').value = '';
     document.querySelector('#preview').setAttribute('hidden', true);
@@ -86,7 +86,7 @@ function captureData() {
   return item;
 }
 
-db.defaults({ items: [] })
-  .write();
+// db.defaults({ items: [] })
+//   .write();
 
 export default InsertForm;
