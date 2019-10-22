@@ -6,7 +6,7 @@
 
 .App {
   text-align: center;
-  font-family: 'American typewriter';
+  font-family: "American typewriter";
 }
 
 .App-header {
@@ -20,9 +20,9 @@
   color: white;
 }
 
-.nav-links{
+.nav-links {
   background-color: #282c34;
-  min-height: 10vh;
+  height: 10vh;
   min-width: 100%;
   display: flex;
   flex-flow: row nowrap;
@@ -72,5 +72,4 @@
 }
 
 @media (max-width: 700px) {
-
 }
