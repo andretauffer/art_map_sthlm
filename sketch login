@@ -1,0 +1,532 @@
+import React, { useEffect, useReducer, useRef } from "react";
+import { useCookies } from "react-cookie";
+import Blank from "./Blank";
+import HOC from "../HOC/HOC";
+const login = require("../imgs/login.png");
+const { Composer, LoginContainer, withLoginState } = HOC;
+let user;
+
+const initialState = {
+  username: "",
+  password: "",
+  isLoading: false,
+  error: "",
+  showForm: false
+};
+
+function loginReducer(state, action) {
+  switch (action.type) {
+    case "login":
+      return {
+        ...state,
+        isLoading: true,
+        error: ""
+      };
+    case "logout":
+      return {
+        ...state,
+        isLoading: false,
+        username: "",
+        password: ""
+      };
+    case "field":
+      return {
+        ...state,
+        [action.field]: action.value
+      };
+    case "error":
+      return {
+        ...state,
+        error: "Incorrect login information",
+        isLoading: false,
+        username: "",
+        password: ""
+      };
+    case "no spaces":
+      return {
+        ...state,
+        error: "No empty spaces"
+      };
+    case "show":
+      return {
+        ...state,
+        showForm: !state.showForm
+      };
+
+    default:
+      break;
+  }
+  return state;
+}
+
+function Login() {
+  const [state, dispatch] = useReducer(loginReducer, initialState);
+  const [cookies, setCookie, removeCookie] = useCookies();
+  const { username, password, isLoading, error, showForm } = state;
+
+  useEffect(() => {
+    if (/\s/gm.test(username)) {
+      dispatch({ type: "no spaces" });
+    }
+  }, [username, password]);
+
+  useEffect(() => {
+    user = localStorage.getItem("user");
+    console.log(user);
+  }, [cookies]);
+
+  const submitLogin = async e => {
+    e.preventDefault();
+    dispatch({ type: "login" });
+    try {
+      const validated = await validation(username, password);
+      localStorage.setItem("user", validated.name);
+      setCookie("user", validated.id);
+      if (validated) {
+      }
+    } catch (error) {
+      dispatch({ type: "error" });
+    }
+  };
+
+  return (
+    <>
+      <div
+        className="login-background"
+        onClick={() => dispatch({ type: "show" })}
+      >
+        <img className="nav-btn login" src={login} />
+      </div>
+      {showForm ? (
+        <div id="login-page" className="login-page">
+          <div>
+            {cookies.user ? (
+              <div>
+                <h1> Hello {username}</h1>
+                <button
+                  onClick={() => {
+                    removeCookie("user");
+                    localStorage.removeItem("user");
+                    dispatch({ type: "logout" });
+                  }}
+                >
+                  Log out
+                </button>
+              </div>
+            ) : (
+              <form id="login-form">
+                {<p className="error">{error}</p>}
+                <label htmlFor="username-input">Insert username</label>
+                <input
+                  className="username-input"
+                  id="username-input"
+                  placeholder="Username..."
+                  value={username}
+                  onChange={e =>
+                    dispatch({
+                      type: "field",
+                      field: "username",
+                      value: e.currentTarget.value
+                    })
+                  }
+                />
+                <label htmlFor="password-input">Insert password</label>
+                <input
+                  className="password-input"
+                  type="password"
+                  id="password-input"
+                  placeholder="Password..."
+                  value={password}
+                  onChange={e =>
+                    dispatch({
+                      type: "field",
+                      field: "password",
+                      value: e.currentTarget.value
+                    })
+                  }
+                />
+                <button
+                  className="login-btn"
+                  type="submit"
+                  onClick={e => submitLogin(e)}
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Loggin in..." : "Login"}
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      ) : (
+        <Blank />
+      )}
+    </>
+  );
+}
+
+async function validation(username, password) {
+  let userData;
+  await fetch("/api/login", {
+    method: "post",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ username, password })
+  })
+    .then(response => response.json())
+    .then(data => (userData = data));
+  return userData;
+}
+
+// const Enhanced = Composer(LoginContainer, withLoginState)(Login)
+console.log("THE GOOD STUFF", Composer, LoginContainer, withLoginState);
+export default Login;
+
+//container --------------------------------------------
+
+export default (Component) => {
+  const Container = ({
+    newStudent,
+    setNewStudent,
+    batch,
+    setBatch,
+    fetcher,
+    getInput,
+    preSubmitValidation,
+    valid,
+    setDuplicate,
+    validateInput,
+    emptyFieldsValidation,
+    ...props
+  }) => {
+    const { appState, setAppState } = useContext(AppContext);
+    const [redirect, setRedirect] = useState(false);
+    const [updateView, setUpdateView] = useState(false);
+    const [onLoadData, setOnLoadData] = useState({});
+    const [showTable, setShowTable] = useState(false);
+    const [selectedBatch, setSelectedBatch] = useState(null);
+    const [batchToShow, setBatchToShow] = useState({
+      name: '',
+      id: 0,
+      users: [],
+    });
+    const [concatBatchNames, setConcatBatchNames] = useState([]);
+
+    const detailedBatchNames = [];
+
+    const fetchAllData = async () => {
+      const response = await fetcher({ path: '/api' });
+      response.locations.shift();
+      setOnLoadData(response);
+    };
+
+    const fillUpUserInput = async () => {
+      const response = await fetcher({
+        path: `/api/users/?userId=${appState.classRoster.userId}`,
+      });
+      setNewStudent({ type: 'fillUp', value: response });
+    };
+
+    const getBatch = async (e) => {
+      const target = JSON.parse(e.target.value);
+      const batchId = target.id;
+      const batchName = target.name;
+      setSelectedBatch(batchId);
+      const response = await fetcher({
+        path: `/api/users?batchId=${batchId}&roleId=3`,
+      });
+      setBatchToShow({ name: batchName, id: batchId, users: response });
+      setShowTable(true);
+      setAppState({ classRoster: { batchName, batchId } });
+    };
+
+    useEffect(() => {
+      preSubmitValidation(valid);
+    }, [newStudent]);
+
+    useEffect(() => {
+      if (updateView) fillUpUserInput();
+    }, [updateView]);
+
+    useEffect(() => {
+      fetchAllData();
+    }, []);
+
+    useEffect(() => {
+      if (onLoadData.batches !== undefined) {
+        onLoadData.batches.map((b) => {
+          const course = onLoadData.courses.find((el) => el.id === b.course_id);
+          const location = onLoadData.locations.find(
+            (el) => el.id === b.location_id,
+          );
+          const concat = {
+            name: `${b.name} ${course.name} ${location.name}`,
+            id: b.id,
+          };
+          detailedBatchNames.push(concat);
+          setConcatBatchNames(detailedBatchNames);
+          return 'hello';
+        });
+      }
+    }, [onLoadData]);
+
+    const userReq = async () => {
+      try {
+        const response = await fetcher({
+          path: '/api/users/',
+          method: 'POST',
+          object: { ...newStudent, batch_id: appState.classRoster.batchId },
+        });
+        if (response.error) {
+          setDuplicate({
+            type: 'input',
+            field: 'duplicate_message',
+            valid: response.error,
+          });
+        } else {
+          setNewStudent({ type: 'reset' });
+          new Notification({
+            title: 'New student was added',
+            text:
+              'Continue to add students to the same class or cancel and select a new class',
+          }).success();
+        }
+      } catch (error) {
+        console.error(error);
+      }
+
+      return 'placeholder';
+    };
+
+    const updateReq = async () => {
+      try {
+        const response = await fetcher({
+          path: '/api/users/',
+          method: 'PUT',
+          object: {
+            ...newStudent,
+            id: appState.classRoster.userId,
+            batch_id: appState.classRoster.batchId,
+          },
+        });
+        if (response.error) {
+          setDuplicate({
+            type: 'input',
+            field: 'duplicate_message',
+            valid: response.error,
+          });
+        } else {
+          new Notification({
+            title: 'Student details were updated',
+            text: '',
+          }).success();
+          setRedirect(true);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+
+      return 'placeholder';
+    };
+
+    const addBatchReq = async () => {
+      try {
+        const response = await fetcher({
+          path: '/api/batches/',
+          method: 'POST',
+          object: batch,
+        });
+        if (response.error) {
+          setDuplicate({
+            type: 'input',
+            field: 'duplicate_message',
+            valid: response.error,
+          });
+        } else {
+          new Notification({
+            title: 'New batch was added',
+          }).success();
+          fetchAllData();
+          setBatch({ type: 'reset' });
+          document.getElementById('course-selector').value = 0;
+          document.getElementById('location-selector').value = 0;
+        }
+      } catch (error) {
+        console.error(error);
+      }
+
+      return 'placeholder';
+    };
+
+    const deleteBatch = () => {
+      new Notification({
+        title: `Do you want to delete ${appState.classRoster.batchName}?`,
+        hide: false,
+        modules: {
+          Confirm: {
+            confirm: true,
+          },
+          History: {
+            history: false,
+          },
+        },
+      })
+        .notice()
+        .on('pnotify.confirm', () => {
+          fetcher({
+            path: `/api/batches?batch=${selectedBatch}`,
+            method: 'DELETE',
+          });
+          fetchAllData();
+          setBatchToShow([]);
+          setShowTable(false);
+        });
+    };
+
+    const deleteUser = (userId, batchId, studentName) => {
+      new Notification({
+        title: `Do you want to delete ${studentName}?`,
+        hide: false,
+        modules: {
+          Confirm: {
+            confirm: true,
+          },
+          History: {
+            history: false,
+          },
+        },
+      })
+        .notice()
+        .on('pnotify.confirm', async () => {
+          const response = await fetcher({
+            path: `/api/users?user=${userId}&batch=${batchId}`,
+            method: 'DELETE',
+          });
+          setBatchToShow({ name: batchToShow.name, users: response });
+        });
+    };
+
+    const OnClickUser = async () => {
+      setNewStudent({
+        value: appState.classRoster.batchId,
+        field: 'batch_id',
+        type: 'input',
+      });
+      emptyFieldsValidation(newStudent);
+      if (valid.validated === 1) userReq();
+    };
+
+    const OnClickUpdate = () => {
+      emptyFieldsValidation(newStudent);
+      if (valid.validated === 1) updateReq();
+    };
+
+    const OnChange = ({
+      value, field, type, validation,
+    }) => {
+      validateInput({
+        field,
+        input: value,
+        type: validation,
+      });
+      setNewStudent({
+        field,
+        value,
+        type,
+      });
+    };
+
+    const OnChangeBatch = ({
+      value, field, type, validation,
+    }) => {
+      if (validation) {
+        validateInput({
+          field,
+          input: value,
+          type: validation,
+        });
+      }
+      setBatch({
+        field,
+        value,
+        type,
+      });
+    };
+
+    return (
+      <Component
+        setSelectedBatch={setSelectedBatch}
+        showTable={showTable}
+        batchToShow={batchToShow.users}
+        idOfBatchToShow={batchToShow.id}
+        nameOfBatchToShow={batchToShow.name}
+        getBatch={getBatch}
+        batches={concatBatchNames}
+        batch={batch}
+        addBatchReq={addBatchReq}
+        deleteBatch={deleteBatch}
+        setUpdateView={setUpdateView}
+        setBatch={setBatch}
+        newStudent={newStudent}
+        deleteUser={deleteUser}
+        setNewStudent={setNewStudent}
+        onClickUser={OnClickUser}
+        onClickUpdate={OnClickUpdate}
+        getInput={getInput}
+        preSubmitValidation={preSubmitValidation}
+        valid={valid}
+        onChange={OnChange}
+        onChangeBatch={OnChangeBatch}
+        onLoadData={onLoadData}
+        redirect={redirect}
+        {...props}
+      />
+    );
+  };
+
+  Container.defaultProps = {
+    newStudent: {},
+    batch: {},
+    valid: {},
+    setNewStudent() {
+      console.log('default function');
+    },
+    setBatch() {
+      console.log('default function');
+    },
+    fetcher() {
+      console.log('default function');
+    },
+    getInput() {
+      console.log('default function');
+    },
+    preSubmitValidation() {
+      console.log('default function');
+    },
+    setDuplicate() {
+      console.log('default function');
+    },
+    validateInput() {
+      console.log('default function');
+    },
+    emptyFieldsValidation() {
+      console.log('default function');
+    },
+  };
+
+  Container.propTypes = {
+    newStudent: PropTypes.objectOf(String),
+    batch: PropTypes.objectOf(String),
+    valid: PropTypes.objectOf(String),
+    setNewStudent: PropTypes.func,
+    setBatch: PropTypes.func,
+    fetcher: PropTypes.func,
+    getInput: PropTypes.func,
+    preSubmitValidation: PropTypes.func,
+    setDuplicate: PropTypes.func,
+    validateInput: PropTypes.func,
+    emptyFieldsValidation: PropTypes.func,
+  };
+
+  return Container;
+};

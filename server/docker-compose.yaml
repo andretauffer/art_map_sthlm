@@ -1,0 +1,29 @@
+version: "2"
+
+services:
+  database:
+    image: "postgres:11.5"
+    container_name: "art_map"
+    networks:
+      - artmap-network
+    ports:
+      - 5432:5432
+    volumes:
+      - ./db/data:/var/lib/postgresql/data
+      - ./db/migration:/var/lib/postgresql/migration
+    environment:
+      - POSTGRES_USER=artmap
+      - POSTGRES_PASSWORD=artmap2019
+      - POSTGRES_DB=artmapsthlm
+
+  admin:
+    image: "thajeztah/pgadmin4"
+    container_name: "artmap-db-admin"
+    networks:
+      - artmap-network
+    ports:
+      - 5050:5050
+
+networks:
+  artmap-network:
+    driver: bridge

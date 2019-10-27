@@ -1,99 +1,18 @@
 import React, { useEffect, useReducer, useRef } from "react";
 import { useCookies } from "react-cookie";
 import Blank from "./Blank";
-
+import HOC from "../HOC/HOC";
 const login = require("../imgs/login.png");
+const { Composer, LoginContainer, withLoginState } = HOC;
 
-let user;
-
-const initialState = {
-  username: "",
-  password: "",
-  isLoading: false,
-  error: "",
-  showForm: false
-};
-
-function loginReducer(state, action) {
-  switch (action.type) {
-    case "login":
-      return {
-        ...state,
-        isLoading: true,
-        error: ""
-      };
-    case "logout":
-      return {
-        ...state,
-        isLoading: false,
-        username: "",
-        password: ""
-      };
-    case "field":
-      return {
-        ...state,
-        [action.field]: action.value
-      };
-    case "error":
-      return {
-        ...state,
-        error: "Incorrect login information",
-        isLoading: false,
-        username: "",
-        password: ""
-      };
-    case "no spaces":
-      return {
-        ...state,
-        error: "No empty spaces"
-      };
-    case "show":
-      return {
-        ...state,
-        showForm: !state.showForm
-      };
-
-    default:
-      break;
-  }
-  return state;
-}
-
-function Login() {
-  const [state, dispatch] = useReducer(loginReducer, initialState);
+function Login({ loginState, loginUpdate, submitLogin, ...props }) {
   const [cookies, setCookie, removeCookie] = useCookies();
-  const { username, password, isLoading, error, showForm } = state;
-
-  useEffect(() => {
-    if (/\s/gm.test(username)) {
-      dispatch({ type: "no spaces" });
-    }
-  }, [username, password]);
-
-  useEffect(() => {
-    user = localStorage.getItem("user");
-    console.log(user);
-  }, [cookies]);
-
-  const submitLogin = async e => {
-    e.preventDefault();
-    dispatch({ type: "login" });
-    try {
-      const validated = await validation(username, password);
-      localStorage.setItem("user", validated.name);
-      setCookie("user", validated.id);
-      if (validated) {
-      }
-    } catch (error) {
-      dispatch({ type: "error" });
-    }
-  };
-
+  const { username, password, isLoading, error, showForm } = loginState;
   return (
     <>
       <div
         className="login-background"
-        onClick={() => dispatch({ type: "show" })}
+        onClick={() => loginUpdate({ type: "show" })}
       >
         <img className="nav-btn login" src={login} />
       </div>
@@ -107,7 +26,7 @@ function Login() {
                   onClick={() => {
                     removeCookie("user");
                     localStorage.removeItem("user");
-                    dispatch({ type: "logout" });
+                    loginUpdate({ type: "logout" });
                   }}
                 >
                   Log out
@@ -123,7 +42,7 @@ function Login() {
                   placeholder="Username..."
                   value={username}
                   onChange={e =>
-                    dispatch({
+                    loginUpdate({
                       type: "field",
                       field: "username",
                       value: e.currentTarget.value
@@ -138,7 +57,7 @@ function Login() {
                   placeholder="Password..."
                   value={password}
                   onChange={e =>
-                    dispatch({
+                    loginUpdate({
                       type: "field",
                       field: "password",
                       value: e.currentTarget.value
@@ -163,19 +82,6 @@ function Login() {
     </>
   );
 }
+console.log(Composer(LoginContainer, withLoginState)(Login));
 
-async function validation(username, password) {
-  let userData;
-  await fetch("/api/login", {
-    method: "post",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ username, password })
-  })
-    .then(response => response.json())
-    .then(data => (userData = data));
-  return userData;
-}
-
-export default Login;
+export default Composer(LoginContainer, withLoginState)(Login);
