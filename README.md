@@ -12,12 +12,12 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
 
-### to run the server`node index.js`
+### to run the server`node index.js` inside the server folder
 
 Runs the server in the development mode.<br>
 Open [http://localhost:5000](http://localhost:5000) to see Hello World in the browser.
 
-### to run the database`docker-compose up`
+### to run the database`docker-compose up` inside the server folder
 
 Runs the database in the development mode.<br>
 The db is run on port 5432 inside a docker container

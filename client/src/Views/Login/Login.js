@@ -1,8 +1,8 @@
-import React, { useEffect, useReducer, useRef } from "react";
+import React from "react";
 import { useCookies } from "react-cookie";
-import Blank from "./Blank";
-import HOC from "../HOC/HOC";
-const login = require("../imgs/login.png");
+import Blank from "../Blank";
+import HOC from "../../HOC/HOC";
+const login = require("../../imgs/login.png");
 const { Composer, LoginContainer, withLoginState } = HOC;
 
 function Login({ loginState, loginUpdate, submitLogin, ...props }) {
@@ -82,6 +82,5 @@ function Login({ loginState, loginUpdate, submitLogin, ...props }) {
     </>
   );
 }
-console.log(Composer(LoginContainer, withLoginState)(Login));
 
 export default Composer(LoginContainer, withLoginState)(Login);
