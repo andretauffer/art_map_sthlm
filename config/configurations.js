@@ -2,7 +2,7 @@ const defaultConfig = {
   clientPort: 3000,
   serverPort: 8000,
   databaseConnectionString:
-    "postgresql://postgres:docker@localhost:5432/artmapsthlm",
+    "postgresql://artmap:artmap2019@localhost:5432/artmapsthlm",
   databaseUser: process.env.POSTGRES_USER,
   databasePassword: process.env.POSTGRES_PASSWORD,
   databaseName: process.env.POSTGRES_DB,

@@ -3,26 +3,11 @@ const path = require("path");
 const pg = require("pg");
 const jwt = require("jsonwebtoken");
 const bodyParser = require("body-parser");
+const { databaseConnect } = require("./db");
 const Client = pg.Client;
 const app = express();
 
-const client = new Client({
-  host: "localhost",
-  port: 5432,
-  user: "artmap",
-  password: "artmap2019",
-  database: "artmapsthlm"
-});
-
-const connect = async () => {
-  console.log("Connecting to database");
-  try {
-    await client.connect();
-    console.log("connected to db");
-  } catch (e) {
-    console.log("error", e);
-  }
-};
+databaseConnect();
 
 app.use(express.static(path.join(__dirname, "client/build")));
 app.use(bodyParser.json());
