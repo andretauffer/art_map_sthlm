@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "start": "react-scripts start",
-    "start:server": "NODE_ENV=development nodemon index.js",
-    "start:client": "cd client && npm run start",
-    "start:db": "cd server && docker-compose up",
+    "server": "NODE_ENV=development nodemon index.js",
+    "client": "cd client && npm run start",
+    "db": "cd server && docker-compose up",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
