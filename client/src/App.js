@@ -4,21 +4,19 @@ import { CookiesProvider } from "react-cookie";
 // import List from './List'
 import "./App.css";
 import "./Views/Gallery.css";
-import "./Views/Form.css";
+import "./Views/Form/Form.css";
 import "./Views/Map.css";
 import "./Views/Login/Login.css";
 import Gallery from "./Views/Gallery";
 import Login from "./Views/Login/Login";
 import { ArtMap } from "./Views/Map";
-import Form from "./Views/Form";
+import Form from "./Views/Form/Form";
 import backgroundGradFx from "./FX/LightToggle";
 import { lightSet } from "./FX/LightToggle";
-
-const toggleOn = require("./imgs/switch.svg");
-const toggleOff = require("./imgs/switch (1).svg");
-const upload = require("./imgs/noun_Upload_128405235.png");
-const gallery = require("./imgs/noun_Art_17569451234.png");
-const map = require("./imgs/noun_Map_9721412.png");
+import map from "./imgs/noun_Map_9721412.png";
+import gallery from "./imgs/noun_Art_17569451234.png";
+import upload from "./imgs/noun_Upload_128405235.png";
+import toggleOn from "./imgs/switch.svg";
 
 function App() {
   return (
@@ -39,7 +37,6 @@ function App() {
                 {" "}
                 <img src={upload} className="nav-btn"></img>{" "}
               </Link>
-              {/* <Link to="/login/"> <p> Login</p> </Link> */}
               <img
                 src={toggleOn}
                 className="toggle-light-btn"
@@ -67,8 +64,12 @@ function App() {
 function toggleLight() {
   let light = localStorage.getItem("light");
   let btnImage = document.querySelector(".toggle-light-btn");
-  light === "light" ? (btnImage.src = toggleOff) : (btnImage.src = toggleOn);
-  btnImage === toggleOn ? (btnImage = toggleOff) : (btnImage = toggleOn);
+  light === "light"
+    ? (btnImage.src = "./imgs/switch (1).svg")
+    : (btnImage.src = "./imgs/switch.svg");
+  btnImage === "./imgs/switch.svg"
+    ? (btnImage = "./imgs/switch (1).svg")
+    : (btnImage = "./imgs/switch.svg");
   light === "light" ? backgroundGradFx(1, 18) : backgroundGradFx(17, 0);
   light === "light" ? (light = "dark") : (light = "light");
   localStorage.setItem("light", light);

@@ -17,7 +17,6 @@ services:
       - POSTGRES_DB=artmapsthlm
 
   admin:
-    user: "artmap"
     image: "thajeztah/pgadmin4"
     container_name: "artmap-db-admin"
     networks:

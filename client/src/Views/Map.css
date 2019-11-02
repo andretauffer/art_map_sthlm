@@ -5,6 +5,12 @@
   height: auto;
 }
 
+.map {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+}
+
 @media (max-width: 600px) {
   .map-container {
     height: 100%;
