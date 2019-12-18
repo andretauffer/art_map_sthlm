@@ -17,11 +17,11 @@
   align-items: center;
   justify-content: space-around;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: #f2e4ce;
 }
 
 .nav-links {
-  background-color: #282c34;
+  background-color: var(--global-background-color);
   height: 10vh;
   min-width: 100%;
   display: flex;
@@ -67,9 +67,22 @@
 }
 
 .nav-btn {
-  height: auto;
-  width: 2.2em;
+  /* height: auto;
+  width: 2.2em; */
+  color: var(--global-white-color);
+  font-size: 2.2em;
+  /* font-size: 2em; */
 }
+
+/* color palette {
+  blue #8CAEFF;
+  green #83EBBA;
+  yellow #F4FFAD;
+  white #F2E4CE;
+  red #FF8692;
+  dark #542E43
+
+} */
 
 @media (max-width: 700px) {
 }

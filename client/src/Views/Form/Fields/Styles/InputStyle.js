@@ -12,4 +12,13 @@ export default styled.input`
   &.error {
     border: 1px solid red;
   }
+
+  &.add-form {
+    width: 100%;
+  }
+
+  &.description {
+    height: 300%;
+    transform: translateY(30%);
+  }
 `;

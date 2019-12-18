@@ -13,9 +13,6 @@ import { ArtMap } from "./Views/Map";
 import Form from "./Views/Form/Form";
 import backgroundGradFx from "./FX/LightToggle";
 import { lightSet } from "./FX/LightToggle";
-import map from "./imgs/noun_Map_9721412.png";
-import gallery from "./imgs/noun_Art_17569451234.png";
-import upload from "./imgs/noun_Upload_128405235.png";
 import toggleOn from "./imgs/switch.svg";
 
 function App() {
@@ -26,16 +23,13 @@ function App() {
           <div className="nav-links">
             <header className="App-header">
               <Link to="/">
-                {" "}
-                <img src={map} className="nav-btn"></img>{" "}
+                <i className="fas fa-map-signs nav-btn"></i>
               </Link>
               <Link to="/gallery/">
-                {" "}
-                <img src={gallery} className="nav-btn"></img>{" "}
+                <i class="fas fa-images nav-btn"></i>
               </Link>
               <Link to="/form/">
-                {" "}
-                <img src={upload} className="nav-btn"></img>{" "}
+                <i class="fas fa-plus-circle nav-btn"></i>
               </Link>
               <img
                 src={toggleOn}

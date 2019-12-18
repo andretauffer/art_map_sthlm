@@ -4,7 +4,8 @@ const initialState = {
   title: "",
   longitude: "",
   latitude: "",
-  images: ""
+  images: [],
+  description: ""
 };
 
 function uploadReducer(state, action) {

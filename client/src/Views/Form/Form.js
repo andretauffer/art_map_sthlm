@@ -1,68 +1,79 @@
 import React from "react";
+import HOC from "../../HOC/HOC";
 import addMarker from "../Map";
-import Input from "./Input/Input";
+import Fields from "./Fields/Fields";
+const { FormContainer, withFormState } = HOC.FormHOCs;
+const { Input, TextArea } = Fields;
 
 let imgSrc = "";
 
-function InsertForm(props) {
+function InsertForm({ uploadUpdate, uploadState, props }) {
+  const { title, longitude, latitude, images, description } = uploadState;
   return (
     <div className="input-page toggle-light">
-      <form className="input-form" value="x">
-        <div />
-        <label htmlFor="title">
-          Title
-          <Input id="title" type="text" value={props.title} />
-        </label>
-        <img id="preview" src="" alt="Image preview..." hidden />
-      </form>
+      <Input
+        id="image"
+        type="file"
+        name="images"
+        accept="image/"
+        onChange={getImage}
+        className="add-form images"
+        label="Images"
+      />
+      <div />
+      <Input
+        id="title"
+        type="text"
+        value={title}
+        label="Title  "
+        className="add-form"
+        onChange={e => uploadUpdate({ field: "title", value: e.target.value })}
+      />
+      <Input
+        id="longitude"
+        type="text"
+        value={longitude}
+        label="Longitude "
+        className="add-form"
+        onChange={e =>
+          uploadUpdate({ field: "longitude", value: e.target.value })
+        }
+      />
+      <Input
+        id="latitude"
+        type="text"
+        value={latitude}
+        label="latitude "
+        className="add-form"
+        onChange={e =>
+          uploadUpdate({ field: "latitude", value: e.target.value })
+        }
+      />
+      <Input
+        id="description"
+        type="text"
+        value={description}
+        label="description"
+        rows="5"
+        className="add-form description"
+        onChange={e =>
+          uploadUpdate({ field: "description", value: e.target.value })
+        }
+      />
+      <div className="buttons-container">
+        <button
+          id="submit-btn"
+          type="button"
+          value="send"
+          onClick={captureData}
+        >
+          Add to the list
+        </button>
+      </div>
+      <img id="preview" src="" alt="Image preview..." hidden />
     </div>
   );
 }
-
-// function InsertForm(props) {
-//   return (
-//     <div className="input-page toggle-light">
-//       <form className="input-form" value="x">
-//         <label className="images" htmlFor="image">
-//           Images
-//           <Input
-//             id="image"
-//             type="file"
-//             name="images"
-//             accept="image/"
-//             onChange={getImage}
-//           />
-//         </label>
-//         <div />
-//         <label htmlFor="title">
-//           Title
-//           <Input id="title" type="text" value={props.title} />
-//         </label>
-//         <label htmlFor="longitude">
-//           Longitude
-//           <Input id="longitude" type="text" />
-//         </label>
-//         <label htmlFor="latitude">
-//           Latitude
-//           <Input id="latitude" type="text" />
-//         </label>
-//         <p>Description</p>
-//         <textarea id="desc" rows="5" className="description" />
-//         <div className="buttons-container">
-//           <button
-//             id="submit-btn"
-//             type="button"
-//             value="send"
-//             onClick={captureData}
-//           >
-//             Add to the list
-//           </button>
-//         </div>
-//         <img id="preview" src="" alt="Image preview..." hidden />
-//       </form>
-//     </div>
-//   );
-// }
 
 function getImage() {
   const preview = document.querySelector("#preview");
@@ -117,4 +128,4 @@ function captureData() {
 // db.defaults({ items: [] })
 //   .write();
 
-export default InsertForm;
+export default HOC.Composer(FormContainer, withFormState)(InsertForm);

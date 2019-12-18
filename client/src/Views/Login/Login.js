@@ -2,8 +2,7 @@ import React from "react";
 import { useCookies } from "react-cookie";
 import Blank from "../Blank";
 import HOC from "../../HOC/HOC";
-const login = require("../../imgs/login.png");
-const { Composer, LoginContainer, withLoginState } = HOC;
+const { LoginContainer, withLoginState } = HOC.LoginHOCs;
 
 function Login({ loginState, loginUpdate, submitLogin, ...props }) {
   const [cookies, setCookie, removeCookie] = useCookies();
@@ -14,7 +13,7 @@ function Login({ loginState, loginUpdate, submitLogin, ...props }) {
         className="login-background"
         onClick={() => loginUpdate({ type: "show" })}
       >
-        <img className="nav-btn login" src={login} />
+        <i class="fas fa-sign-in-alt nav-btn login"></i>
       </div>
       {showForm ? (
         <div id="login-page" className="login-page">
@@ -83,4 +82,4 @@ function Login({ loginState, loginUpdate, submitLogin, ...props }) {
   );
 }
 
-export default Composer(LoginContainer, withLoginState)(Login);
+export default HOC.Composer(LoginContainer, withLoginState)(Login);
