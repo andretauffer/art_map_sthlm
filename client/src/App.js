@@ -5,11 +5,11 @@ import { CookiesProvider } from "react-cookie";
 import "./App.css";
 import "./Views/Gallery.css";
 import "./Views/Form/Form.css";
-import "./Views/Map.css";
+import "./Views/Map/Map.css";
 import "./Views/Login/Login.css";
 import Gallery from "./Views/Gallery";
 import Login from "./Views/Login/Login";
-import { ArtMap } from "./Views/Map";
+import { ArtMap } from "./Views/Map/Map";
 import Form from "./Views/Form/Form";
 import backgroundGradFx from "./FX/LightToggle";
 import { lightSet } from "./FX/LightToggle";
@@ -26,10 +26,10 @@ function App() {
                 <i className="fas fa-map-signs nav-btn"></i>
               </Link>
               <Link to="/gallery/">
-                <i class="fas fa-images nav-btn"></i>
+                <i className="fas fa-images nav-btn"></i>
               </Link>
               <Link to="/form/">
-                <i class="fas fa-plus-circle nav-btn"></i>
+                <i className="fas fa-plus-circle nav-btn"></i>
               </Link>
               <img
                 src={toggleOn}

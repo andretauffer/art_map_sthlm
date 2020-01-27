@@ -13,7 +13,7 @@ function Login({ loginState, loginUpdate, submitLogin, ...props }) {
         className="login-background"
         onClick={() => loginUpdate({ type: "show" })}
       >
-        <i class="fas fa-sign-in-alt nav-btn login"></i>
+        <i className="fas fa-sign-in-alt nav-btn login"></i>
       </div>
       {showForm ? (
         <div id="login-page" className="login-page">

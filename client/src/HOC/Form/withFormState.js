@@ -1,11 +1,12 @@
 import React, { useReducer } from "react";
 
 const initialState = {
-  title: "",
-  longitude: "",
-  latitude: "",
+  name: "",
+  longitude: 0,
+  latitude: 0,
   images: [],
-  description: ""
+  description: "",
+  preview: []
 };
 
 function uploadReducer(state, action) {
@@ -14,6 +15,11 @@ function uploadReducer(state, action) {
       return {
         ...state,
         [action.field]: action.value
+      };
+    case "add-image":
+      return {
+        ...state,
+        images: [...state.images, action.value]
       };
     case "error":
       return {
