@@ -44,3 +44,9 @@
 #submit-btn {
   padding: 0.2em 0.2em 0.2em 0.2em;
 }
+
+.nav {
+  /* width: 400px;
+  height: 400px; */
+  fill: black;
+}

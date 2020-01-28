@@ -1,3 +1,4 @@
 module.exports = {
-  login: require("./login.api")
+  login: require("./login.api"),
+  items: require("./items.api")
 };

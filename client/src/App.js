@@ -14,11 +14,13 @@ import Form from "./Views/Form/Form";
 import backgroundGradFx from "./FX/LightToggle";
 import { lightSet } from "./FX/LightToggle";
 import toggleOn from "./imgs/switch.svg";
+import Nav from "./Views/NavBar";
 
 function App() {
   return (
     <CookiesProvider>
-      <Router>
+      <Nav />
+      {/* <Router>
         <div className="App">
           <div className="nav-links">
             <header className="App-header">
@@ -45,7 +47,7 @@ function App() {
           <Route path="/gallery/" component={Gallery} />
           <Route path="/form/" component={Form} />
         </Switch>
-      </Router>
+      </Router> */}
     </CookiesProvider>
   );
 }

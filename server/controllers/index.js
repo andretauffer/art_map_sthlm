@@ -1,3 +1,4 @@
 module.exports = {
-  login: require("./login.controller")
+  login: require("./login.controller"),
+  items: require("./items.controller")
 };

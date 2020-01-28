@@ -2,7 +2,6 @@ const { login } = require("../api");
 const jwt = require("jsonwebtoken");
 
 const postLogin = async (req, res) => {
-  console.log("req body", req.body);
   const user = await login.findUser(req.body.username);
 
   if (user.rows[0].password === req.body.password) {

@@ -4,7 +4,7 @@ const pg = require("pg");
 const jwt = require("jsonwebtoken");
 const bodyParser = require("body-parser");
 const { databaseConnect, pool } = require("./db");
-const { login } = require("./routers");
+const { login, items } = require("./routers");
 
 const app = express();
 
@@ -77,6 +77,7 @@ app.get("/deleteUsers", async (req, res) => {
 // Routes
 
 app.use("/api/login", login);
+app.use("/api/items", items);
 
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, "art_map_sthlm/build")));

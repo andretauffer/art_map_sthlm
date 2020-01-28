@@ -2,6 +2,8 @@ DROP TABLE IF EXISTS "users"
 CASCADE;
 DROP TABLE IF EXISTS "images"
 CASCADE;
+DROP TABLE IF EXISTS "items"
+CASCADE;
 
 SET timezone
 = "Europe/Stockholm";
@@ -9,16 +11,45 @@ SET timezone
 
 CREATE TABLE "users"
 (
-    id serial primary key,
-    username varchar not null unique,
-    password varchar not null,
-    name varchar not null,
-    role boolean not null
+    id SERIAL PRIMARY KEY,
+    username VARCHAR NOT NULL unique,
+    password VARCHAR NOT NULL,
+    name VARCHAR NOT NULL,
+    role BOOLEAN NOT NULL
 );
 
 CREATE TABLE "images"
 (
-    id serial primary key,
-    name varchar not null unique,
-    image bytea not null
+    id SERIAL PRIMARY KEY,
+    name VARCHAR NOT NULL unique,
+    data BYTEA NOT NULL,
+    user_id INTEGER DEFAULT NULL,
+    FOREIGN KEY
+    (user_id) REFERENCES "users"
+    (id)
 );
+
+CREATE TABLE "items"
+(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR NOT NULL unique,
+    latitude DECIMAL,
+    longitude DECIMAL,
+    user_id INTEGER DEFAULT NULL,
+    FOREIGN KEY
+    (user_id) REFERENCES "users"
+    (id)
+);
+
+CREATE TABLE "items_images"
+(
+    id SERIAL PRIMARY KEY,
+    item_id INTEGER DEFAULT NULL,
+    FOREIGN KEY (item_id) REFERENCES "items" (id),
+    image_id INTEGER DEFAULT NULL,
+    FOREIGN KEY
+    (image_id) REFERENCES "images"
+    (id)
+);
+
+
