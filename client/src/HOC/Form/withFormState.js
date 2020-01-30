@@ -19,7 +19,8 @@ function uploadReducer(state, action) {
     case "add-image":
       return {
         ...state,
-        images: [...state.images, action.value]
+        images: [...state.images, action.value],
+        reader: 0
       };
     case "error":
       return {

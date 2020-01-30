@@ -1,8 +1,14 @@
 import React from "react";
-import { Path } from '../Styles/ShapesContour';
+import styled from "styled-components";
+import { Path } from "../Styles/ShapesContour";
+
+const Size = styled.svg`
+  width: 310px;
+  height: 300px;
+`;
 
 export default () => (
-  <svg width="580" height="400" xmlns="http://www.w3.org/2000/svg">
+  <Size xmlns="http://www.w3.org/2000/svg">
     <g>
       <Path
         stroke-dasharray="5,5"
@@ -13,5 +19,5 @@ export default () => (
         fill="#7AD6CA"
       />
     </g>
-  </svg>
+  </Size>
 );

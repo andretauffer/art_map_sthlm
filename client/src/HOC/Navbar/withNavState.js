@@ -4,7 +4,7 @@ const initialState = {
   map: true,
   form: false,
   gallery: false,
-  login: false,
+  login: false
 };
 
 function navReducer(state, action) {
@@ -14,11 +14,11 @@ function navReducer(state, action) {
     navigate: () => {
       let filtered = {};
       const unactive = Object.keys(state).filter(el => el !== field);
-      unactive.forEach(i => filtered = { ...filtered, [i]: false });
+      unactive.forEach(i => (filtered = { ...filtered, [i]: false }));
       return {
         ...filtered,
-        [field]: true,
-      }
+        [field]: true
+      };
     }
   };
   return methods[method]();
@@ -28,7 +28,17 @@ export default Component => {
   const StateContainer = ({ ...props }) => {
     const [state, dispatch] = useReducer(navReducer, initialState);
 
-    useEffect(() => dispatch({ method: 'navigate', field: window.location.pathname.replace(/\//g, '') }), [])
+    useEffect(() => {
+      const path =
+        window.location.pathname === "/"
+          ? "map"
+          : window.location.pathname.replace(/\//g, "");
+
+      dispatch({
+        method: "navigate",
+        field: path
+      });
+    }, []);
     return <Component navState={state} navDispatch={dispatch} {...props} />;
   };
   return StateContainer;

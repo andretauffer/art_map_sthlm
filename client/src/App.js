@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import styled from "styled-components";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import { CookiesProvider } from "react-cookie";
 // import List from './List'
@@ -15,39 +16,21 @@ import backgroundGradFx from "./FX/LightToggle";
 import { lightSet } from "./FX/LightToggle";
 import toggleOn from "./imgs/switch.svg";
 import Nav from "./Views/NavBar";
+import ViewWrapper from "./Styles/ViewWrapper";
+
+const ViewContainer = styled.div`
+  height: 100vh;
+  width: 100vw;
+`;
 
 function App() {
   return (
     <CookiesProvider>
-      <Nav />
-      {/* <Router>
-        <div className="App">
-          <div className="nav-links">
-            <header className="App-header">
-              <Link to="/">
-                <i className="fas fa-map-signs nav-btn"></i>
-              </Link>
-              <Link to="/gallery/">
-                <i className="fas fa-images nav-btn"></i>
-              </Link>
-              <Link to="/form/">
-                <i className="fas fa-plus-circle nav-btn"></i>
-              </Link>
-              <img
-                src={toggleOn}
-                className="toggle-light-btn"
-                onClick={toggleLight}
-              />
-            </header>
-            <Login />
-          </div>
-        </div>
-        <Switch>
-          <Route exact path="/" component={ArtMap} />
-          <Route path="/gallery/" component={Gallery} />
-          <Route path="/form/" component={Form} />
-        </Switch>
-      </Router> */}
+      <ViewContainer>
+        <ViewWrapper>
+          <Nav />
+        </ViewWrapper>
+      </ViewContainer>
     </CookiesProvider>
   );
 }

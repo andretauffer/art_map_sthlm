@@ -10,7 +10,21 @@ stroke-linejoin: miter;
   fill: var(--global-white-color);
   stroke: var(--global-dark-color);
   animation: var(--move-offset);
-  
+}
+`;
+
+const FormShape = styled.path`
+stroke-dasharray: 7;
+stroke-width: 7px;
+stroke-miterlimit: 10;
+stroke-linejoin: miter;
+fill: var(--global-light-blue);
+animation: ${props => props.active ? 'var(--move-offset)' : ''};
+:hover{
+  animation: var(--move-offset);
+}
+@media only screen and (max-width: 700%) {
+  transform: scale(0.5);
 }
 `;
 
@@ -35,4 +49,5 @@ transform: ${props => props.transform ? props.transform : ''};
 `;
 
 export const Path = ({ ...props }) => <Shape  {...props} />
+export const BigShapes = ({ ...props }) => <FormShape {...props} />
 export const Circle = ({ active, ...props }) => <CircleShape cx={active ? "50" : "25"} cy={active ? "50" : "25"} r={active ? "40" : "20"} {...{ active }}{...props} />

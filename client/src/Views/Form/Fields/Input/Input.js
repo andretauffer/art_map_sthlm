@@ -8,18 +8,15 @@ export default ({
   type,
   name,
   accept,
-  onChange,
   value,
   label,
-  onBlur,
   placeholder,
-  className
+  className,
+  ...props
 }) => (
   <StyledRow>
     <StyledLabel className={className}>{label}</StyledLabel>
     <StyledInput
-      onChange={onChange}
-      onBlur={onBlur}
       placeholder={placeholder}
       value={value}
       id={id}
@@ -27,6 +24,7 @@ export default ({
       name={name}
       accept={accept}
       className={`input ${className}`}
+      {...props}
     />
   </StyledRow>
 );
