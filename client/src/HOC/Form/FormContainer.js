@@ -12,15 +12,17 @@ export default Component => {
 
     const getImage = e => {
       const files = e.target.files;
-      if (files.length > 9) {
+      if (files.length > 9 || images.length === 9) {
         alert("Maximum of 9 images per publication");
       }
-      if (files.length > 1) {
-        for (let i = 1; i < files.length; i++) {
-          if (i < 9) queue.push(files[i]);
+      if (images.length < 9) {
+        if (files.length > 1) {
+          for (let i = 1; i < 9 - images.length; i++) {
+            if (i < 9) queue.push(files[i]);
+          }
         }
+        readFile(files[0]);
       }
-      readFile(files[0]);
     };
 
     const readFile = file => {
@@ -37,7 +39,7 @@ export default Component => {
         }
       };
 
-      if (file) {
+      if (file && images.length < 9) {
         reader.readAsDataURL(file);
       }
     };
