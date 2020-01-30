@@ -11,24 +11,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-
-:root {
-  --global-background-color: #ed9b58;
-  --global-white-color: #f2e4ce;
-  --global-dark-color: #542e43;
-  --global-yellow-color: #f4ffad;
-  --global-green-color: #83ebba;
-  --global-blue-color: #8caeff;
-  --global-light-blue: #9bb0db;
-  --global-emerald-green: #7ad6ca;
-}
-
-/* color palette {
-  blue #8CAEFF;
-  green #83EBBA;
-  yellow #F4FFAD;
-  white #F2E4CE;
-  red #FF8692;
-  dark #542E43
-
-} */
