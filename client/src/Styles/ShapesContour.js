@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Shape = styled.path`
+  stroke: var(--global-dark-color);
   stroke-dasharray: 7;
   stroke-width: 7px;
   stroke-miterlimit: 10;
@@ -29,7 +30,7 @@ const FormShape = styled.path`
 `;
 
 const CircleShape = styled.circle`
-  stroke: ${props => (props.active ? "black" : "var(--global-light-blue)")};
+  stroke: var(--global-light-blue);
   stroke-dasharray: 7;
   stroke-width: 7px;
   stroke-miterlimit: 10;
@@ -48,6 +49,16 @@ const CircleShape = styled.circle`
   }
 `;
 
+const SmallerCircle = styled.circle`
+  margin: 0 auto;
+  :hover {
+    fill: var(--global-white-color);
+  }
+  @media only screen and (max-width: 700px) {
+    fill: ${props => (props.active ? "var(--global-white-color)" : "")};
+  }
+`;
+
 export const Path = ({ ...props }) => <Shape {...props} />;
 export const BigShapes = ({ ...props }) => <FormShape {...props} />;
 export const Circle = ({ active, ...props }) => (
@@ -58,4 +69,7 @@ export const Circle = ({ active, ...props }) => (
     {...{ active }}
     {...props}
   />
+);
+export const CircleSmaller = ({ ...props }) => (
+  <SmallerCircle cx="25" cy="25" r="20" {...props} />
 );

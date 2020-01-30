@@ -10,41 +10,32 @@ const initialState = {
 };
 
 function uploadReducer(state, action) {
-  switch (action.type) {
-    case "input":
+  const { field, method, value } = action;
+
+  const methods = {
+    input: () => {
       return {
         ...state,
-        [action.field]: action.value
+        [field]: value
       };
-    case "add-image":
+    },
+    addImage: () => {
       return {
         ...state,
         images: [...state.images, action.value],
         reader: 0
       };
-    case "error":
+    },
+    removeImage: () => {
+      state.images.splice(value, 1);
       return {
         ...state,
-        error: "Incorrect login information",
-        isLoading: false,
-        username: "",
-        password: ""
+        images: [...state.images]
       };
-    case "no spaces":
-      return {
-        ...state,
-        error: "No empty spaces"
-      };
-    case "show":
-      return {
-        ...state,
-        showForm: !state.showForm
-      };
+    }
+  };
 
-    default:
-      break;
-  }
-  return state;
+  return method ? methods[method]() : new Error("Specify method");
 }
 
 export default Component => {

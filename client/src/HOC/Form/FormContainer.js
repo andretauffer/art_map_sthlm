@@ -12,9 +12,12 @@ export default Component => {
 
     const getImage = e => {
       const files = e.target.files;
+      if (files.length > 9) {
+        alert("Maximum of 9 images per publication");
+      }
       if (files.length > 1) {
         for (let i = 1; i < files.length; i++) {
-          queue.push(files[i]);
+          if (i < 9) queue.push(files[i]);
         }
       }
       readFile(files[0]);
@@ -25,10 +28,10 @@ export default Component => {
 
       reader.onloadend = function() {
         uploadUpdate({
-          type: "add-image",
+          method: "addImage",
           value: reader.result
         });
-        if (queue.length > 0) {
+        if (queue.length > 0 && images.length < 9) {
           readFile(queue[0]);
           queue.shift();
         }
@@ -38,8 +41,6 @@ export default Component => {
         reader.readAsDataURL(file);
       }
     };
-
-    // useEffect(() => reader === 0 && readFile(queue[0]), [reader]);
 
     const postRequest = () =>
       fetcher({

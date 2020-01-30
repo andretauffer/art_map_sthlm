@@ -13,21 +13,6 @@
   overflow: hidden;
 }
 
-#preview {
-  max-height: 10em;
-  max-width: 10em;
-  height: auto;
-  width: auto;
-  text-align: right;
-  margin: 0.1em;
-}
-
 #submit-btn {
   padding: 0.2em 0.2em 0.2em 0.2em;
-}
-
-.nav {
-  /* width: 400px;
-  height: 400px; */
-  fill: black;
 }

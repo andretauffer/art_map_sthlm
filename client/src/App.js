@@ -1,21 +1,15 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import { CookiesProvider } from "react-cookie";
-// import List from './List'
 import "./App.css";
 import "./Views/Gallery.css";
 import "./Views/Form/Form.css";
 import "./Views/Map/Map.css";
 import "./Views/Login/Login.css";
-import Gallery from "./Views/Gallery";
-import Login from "./Views/Login/Login";
-import { ArtMap } from "./Views/Map/Map";
-import Form from "./Views/Form/Form";
 import backgroundGradFx from "./FX/LightToggle";
 import { lightSet } from "./FX/LightToggle";
 import toggleOn from "./imgs/switch.svg";
-import Nav from "./Views/NavBar";
+import Nav from "./Views/NavBar/NavBar";
 import ViewWrapper from "./Styles/ViewWrapper";
 
 const ViewContainer = styled.div`
@@ -34,11 +28,6 @@ function App() {
     </CookiesProvider>
   );
 }
-
-// function toggleHide(prop) {
-//   unhide(prop);
-//   localStorage.setItem('show', prop);
-// }
 
 function toggleLight() {
   let light = localStorage.getItem("light");
