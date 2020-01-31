@@ -4,11 +4,6 @@ const {
   items: { postItem }
 } = require("../controllers");
 
-// let bodyParser = {
-//   json: { limit: "50mb", extended: true },
-//   urlencoded: { limit: "50mb", extended: true }
-// };
-
-router.post("/", bodyParser, postItem);
+router.post("/", postItem);
 
 module.exports = router;
