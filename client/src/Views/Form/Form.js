@@ -1,6 +1,5 @@
 import React from "react";
-import styled from "styled-components";
-import HOC from "../../HOC/HOC";
+import Services from "../../Services/HOC";
 import addMarker from "../Map/Map";
 import Fields from "./Fields/Fields";
 import FormBackground from "../../imgs/form-background";
@@ -14,37 +13,60 @@ import {
   ImagePreview,
   PreviewBox,
   DeleteButton,
-  ButtonBackground
+  ButtonBackground,
+  Header
 } from "./FormStyles";
 import { CircleSmaller } from "../../Styles/ShapesContour";
 
 const {
-  FormHOCs: { FormContainer, withFormState },
+  FormHOCs: {
+    FormContainer: { getImages, readFile },
+    withFormState
+  },
   CommonLogic: { withFetch }
-} = HOC;
+} = Services;
 const { Input } = Fields;
 
-function InsertForm({ uploadUpdate, uploadState, getImage, postRequest }) {
+function InsertForm({ uploadUpdate, uploadState, fetcher }) {
   const { name, longitude, latitude, images, description } = uploadState;
 
+  const onClick = e => {
+    getImages(e, 9 - images.length);
+    readFile(value => uploadUpdate({ method: "addImage", value }));
+  };
+
+  const postRequest = () => {
+    fetcher({
+      path: "/api/items",
+      method: "POST",
+      object: { name, latitude, longitude, images }
+    })
+      .then(res => {
+        console.log("notify success, reset state", res);
+
+        //this should happen on map load
+        addMarker(name, longitude, latitude);
+      })
+      .catch(error => console.log("notify error", error));
+  };
   return (
     <FormWrapper>
+      <Header className="form-header">Title</Header>
       <FormPlacer>
         <FormShape>
           <FormBackground />
         </FormShape>
-        <FormInputs className="input-page toggle-light">
+        <FormInputs className="form-inputs toggle-light">
           <Input
             id="image"
             type="file"
             name="images"
             accept=".png, .jpeg, .jpg"
-            onChange={getImage}
+            onChange={onClick}
             className="add-form images"
             label="Images"
             multiple
           />
-          <div />
           <Input
             id="name"
             type="text"
@@ -115,34 +137,37 @@ function InsertForm({ uploadUpdate, uploadState, getImage, postRequest }) {
         </FormInputs>
       </FormPlacer>
       <FormPlacer>
-        <FormShape>
+        <FormShape className="form-shape">
           <PreviewBackground />
-          <Previews>
+          <Previews className="preview-grid">
             {images.length > 0 &&
-              images.map((img, i) => (
-                <PreviewBox>
-                  <ButtonBackground
-                    onClick={() =>
-                      uploadUpdate({ method: "removeImage", value: i })
-                    }
-                  >
-                    <CircleSmaller />
-                  </ButtonBackground>
-                  <DeleteButton
-                    onClick={() =>
-                      uploadUpdate({ method: "removeImage", value: i })
-                    }
-                  >
-                    x
-                  </DeleteButton>
-                  <ImagePreview
-                    key={i}
-                    id="preview"
-                    src={img}
-                    alt="Image preview..."
-                  />
-                </PreviewBox>
-              ))}
+              images.map(
+                (img, i) =>
+                  i < 9 && (
+                    <PreviewBox>
+                      <ButtonBackground
+                        onClick={() =>
+                          uploadUpdate({ method: "removeImage", value: i })
+                        }
+                      >
+                        <CircleSmaller />
+                      </ButtonBackground>
+                      <DeleteButton
+                        onClick={() =>
+                          uploadUpdate({ method: "removeImage", value: i })
+                        }
+                      >
+                        x
+                      </DeleteButton>
+                      <ImagePreview
+                        key={i}
+                        id="preview"
+                        src={img}
+                        alt="Image preview..."
+                      />
+                    </PreviewBox>
+                  )
+              )}
           </Previews>
         </FormShape>
       </FormPlacer>
@@ -150,8 +175,4 @@ function InsertForm({ uploadUpdate, uploadState, getImage, postRequest }) {
   );
 }
 
-export default HOC.Composer(
-  FormContainer,
-  withFormState,
-  withFetch
-)(InsertForm);
+export default Services.Composer(withFormState, withFetch)(InsertForm);

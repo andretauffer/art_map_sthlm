@@ -14,6 +14,8 @@ export const FormWrapper = styled.div`
   }
 `;
 
+export const Header = styled.h1``;
+
 export const FormPlacer = styled.div`
   position: relative;
   width: 40%;

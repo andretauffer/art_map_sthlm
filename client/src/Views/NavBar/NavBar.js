@@ -6,7 +6,7 @@ import Login from "../Login/Login";
 import { ArtMap } from "../Map/Map";
 import Form from "../Form/Form";
 
-import HOC from "../../HOC/HOC";
+import HOC from "../../Services/HOC";
 import { Circle } from "../../Styles/ShapesContour";
 import { Container, IconBackground, Icon } from "./NavBarStyle";
 import NavButton from "./NavButton";

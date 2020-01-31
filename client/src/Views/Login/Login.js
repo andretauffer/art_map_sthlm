@@ -1,7 +1,7 @@
 import React from "react";
 import { useCookies } from "react-cookie";
 import Blank from "../Blank";
-import HOC from "../../HOC/HOC";
+import HOC from "../../Services/HOC";
 const { LoginContainer, withLoginState } = HOC.LoginHOCs;
 
 function Login({ loginState, loginUpdate, submitLogin, ...props }) {

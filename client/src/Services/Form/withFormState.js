@@ -32,10 +32,15 @@ function uploadReducer(state, action) {
         ...state,
         images: [...state.images]
       };
+    },
+    default: () => {
+      return {
+        ...state
+      };
     }
   };
 
-  return method ? methods[method]() : new Error("Specify method");
+  return method ? methods[method]() : methods.default();
 }
 
 export default Component => {
