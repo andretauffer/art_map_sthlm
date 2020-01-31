@@ -31,7 +31,7 @@ function InsertForm({ uploadUpdate, uploadState, fetcher }) {
   const { name, longitude, latitude, images, description } = uploadState;
 
   const onClick = e => {
-    getImages(e, 9 - images.length);
+    getImages(e.target.files, 9 - images.length);
     readFile(value => uploadUpdate({ method: "addImage", value }));
   };
 
@@ -144,7 +144,7 @@ function InsertForm({ uploadUpdate, uploadState, fetcher }) {
               images.map(
                 (img, i) =>
                   i < 9 && (
-                    <PreviewBox>
+                    <PreviewBox key={i}>
                       <ButtonBackground
                         onClick={() =>
                           uploadUpdate({ method: "removeImage", value: i })
@@ -160,7 +160,6 @@ function InsertForm({ uploadUpdate, uploadState, fetcher }) {
                         x
                       </DeleteButton>
                       <ImagePreview
-                        key={i}
                         id="preview"
                         src={img}
                         alt="Image preview..."

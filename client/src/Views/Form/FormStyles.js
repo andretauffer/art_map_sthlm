@@ -89,6 +89,7 @@ export const DeleteButton = styled.div`
   right: 16px;
   font-size: 2rem;
   z-index: 10;
+  cursor: pointer;
   color: var(--global-dark-color);
   font-weight: 900;
 `;

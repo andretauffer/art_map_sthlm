@@ -3,6 +3,7 @@ const {
 } = require("../api");
 
 const postItem = async (req, res) => {
+  console.log("the req", req);
   const { name, images, latitude, longitude } = req.body;
   const imagesIds = images.map((img, index) =>
     insertImage({ name: `${name}(${index})`, data: img })
