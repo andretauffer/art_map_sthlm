@@ -1,12 +1,5 @@
-export let queue = [];
-
-// export const error = (err, message) => new Error({ ...err, message });
-
-export const clearQueue = () => {
-  return (queue = []);
-};
-
 export const getImages = (files, slots) => {
+  let queue = [];
   if (files.length > 9 || slots === 0 || files.length > slots) {
     alert("Maximum of 9 images per publication");
   }
@@ -25,11 +18,9 @@ export const readFile = image => {
 
     reader.onloadend = () => {
       resolve(reader.result);
-      reject(new Error("Could not read image file"));
     };
 
     reader.readAsDataURL(image);
-    // throw new Error({ message: "Invalid type" });
   })
     .then(data => data)
     .catch(() => {
