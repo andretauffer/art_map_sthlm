@@ -29,6 +29,5 @@ export default ({
       className={`input ${className}`}
       rows={rows}
     />
-    {console.log("rowsss", rows)}
   </StyledLabel>
 );

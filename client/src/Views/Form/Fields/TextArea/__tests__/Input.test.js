@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { create, act } from "react-test-renderer";
-import InputField from "../Input";
+import InputField from "../TextArea";
 
 let container;
 
@@ -29,7 +29,7 @@ describe("Input component", () => {
       component = create(<EnhancedInput />);
     });
     const instance = component.root;
-    const input = instance.findByType("input");
+    const input = instance.findByType("textarea");
     act(() => input.props.onChange("test"));
     expect(input.props.value).toBe("test");
   });

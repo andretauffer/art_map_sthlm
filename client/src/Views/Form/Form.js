@@ -31,8 +31,12 @@ function InsertForm({ uploadUpdate, uploadState, fetcher }) {
   const { name, longitude, latitude, images, description } = uploadState;
 
   const onClick = e => {
-    getImages(e.target.files, 9 - images.length);
-    readFile(value => uploadUpdate({ method: "addImage", value }));
+    const images = [];
+    const queue = getImages(e.target.files, 9 - images.length);
+    queue.forEach(i => images.push(readFile(i)));
+    Promise.all(images).then(value => {
+      uploadUpdate({ method: "addImage", value });
+    });
   };
 
   const postRequest = () => {

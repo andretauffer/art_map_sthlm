@@ -22,7 +22,7 @@ function uploadReducer(state, action) {
     addImage: () => {
       return {
         ...state,
-        images: [...state.images, action.value],
+        images: [...state.images, ...action.value],
         reader: 0
       };
     },

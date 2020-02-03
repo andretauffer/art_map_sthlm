@@ -1,5 +1,7 @@
 export let queue = [];
 
+// export const error = (err, message) => new Error({ ...err, message });
+
 export const clearQueue = () => {
   return (queue = []);
 };
@@ -17,20 +19,22 @@ export const getImages = (files, slots) => {
   return queue;
 };
 
-export const readFile = setState => {
-  const reader = new FileReader();
+export const readFile = image => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
 
-  reader.onloadend = function() {
-    setState(reader.result);
-    if (queue.length > 0) {
-      readFile(setState);
-    }
-  };
+    reader.onloadend = () => {
+      resolve(reader.result);
+      reject(new Error("Could not read image file"));
+    };
 
-  if (queue && queue.length > 0) {
-    reader.readAsDataURL(queue[0]);
-    queue.shift();
-  }
+    reader.readAsDataURL(image);
+    // throw new Error({ message: "Invalid type" });
+  })
+    .then(data => data)
+    .catch(() => {
+      throw new Error("Could not read image file");
+    });
 };
 
 export default {
