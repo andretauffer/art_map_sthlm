@@ -33,6 +33,11 @@ function uploadReducer(state, action) {
         images: [...state.images]
       };
     },
+    reset: () => {
+      return {
+        ...initialState
+      };
+    },
     default: () => {
       return {
         ...state

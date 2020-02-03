@@ -20,7 +20,7 @@ import { CircleSmaller } from "../../Styles/ShapesContour";
 
 const {
   FormHOCs: {
-    FormContainer: { getImages, readFile },
+    FormContainer: { getImages, readFile, notification, postRequest },
     withFormState
   },
   CommonLogic: { withFetch }
@@ -30,7 +30,7 @@ const { Input } = Fields;
 function InsertForm({ uploadUpdate, uploadState, fetcher }) {
   const { name, longitude, latitude, images, description } = uploadState;
 
-  const onClick = e => {
+  const onChangeAddImage = e => {
     const images = [];
     const queue = getImages(e.target.files, 9 - images.length);
     queue.forEach(i => images.push(readFile(i)));
@@ -39,20 +39,14 @@ function InsertForm({ uploadUpdate, uploadState, fetcher }) {
     });
   };
 
-  const postRequest = () => {
-    fetcher({
-      path: "/api/items",
-      method: "POST",
-      object: { name, latitude, longitude, images }
-    })
-      .then(res => {
-        console.log("notify success, reset state", res);
-
-        //this should happen on map load
-        addMarker(name, longitude, latitude);
-      })
-      .catch(error => console.log("notify error", error));
+  const onClickSubmit = () => {
+    name
+      ? postRequest({ name, latitude, longitude, images }).then(() =>
+          uploadUpdate({ method: "reset" })
+        )
+      : notification.message("Please select a name first");
   };
+
   return (
     <FormWrapper>
       <Header className="form-header">Title</Header>
@@ -66,7 +60,7 @@ function InsertForm({ uploadUpdate, uploadState, fetcher }) {
             type="file"
             name="images"
             accept=".png, .jpeg, .jpg"
-            onChange={onClick}
+            onChange={onChangeAddImage}
             className="add-form images"
             label="Images"
             multiple
@@ -133,7 +127,8 @@ function InsertForm({ uploadUpdate, uploadState, fetcher }) {
               id="submit-btn"
               type="button"
               value="send"
-              onClick={postRequest}
+              onClick={onClickSubmit}
+              disabled={!name}
             >
               Add to the list
             </button>
@@ -144,7 +139,8 @@ function InsertForm({ uploadUpdate, uploadState, fetcher }) {
         <FormShape className="form-shape">
           <PreviewBackground />
           <Previews className="preview-grid">
-            {images.length > 0 &&
+            {images &&
+              images.length > 0 &&
               images.map(
                 (img, i) =>
                   i < 9 && (

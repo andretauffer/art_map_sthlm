@@ -1,30 +1,24 @@
 import React from "react";
-import { render, unmountComponentAtNode } from "react-dom";
-import { act } from "react-dom/test-utils";
+import { render, fireEvent, findByLabelText } from "@testing-library/react";
+import "@testing-library/jest-dom";
 import Image from "../../imgs/login.png";
 
 import Form from "./Form";
+import Services from "../../Services/HOC";
+const {
+  FormHOCs: {
+    FormContainer: { notification }
+  }
+} = Services;
 
-let container = null;
-beforeEach(() => {
-  container = document.createElement("div");
-  document.body.appendChild(container);
-});
-
-afterEach(() => {
-  unmountComponentAtNode(container);
-  container.remove();
-  container = null;
-});
+jest.spyOn(notification, "message").mockImplementation(() => {});
 
 describe("The form component", () => {
   it("renders all the children", () => {
-    act(() => {
-      render(<Form />, container);
-    });
+    const { container } = render(<Form />);
     const header = container.firstChild.firstChild;
-    const inputList = document.querySelector(".form-inputs");
-    const formShape = document.querySelector(".form-shape");
+    const inputList = container.querySelector(".form-inputs");
+    const formShape = container.querySelector(".form-shape");
 
     expect(header.textContent).toBe("Title");
     expect(container.children.length).toBe(1);
@@ -32,24 +26,34 @@ describe("The form component", () => {
     expect(inputList.children.length).toBe(6);
     expect(formShape.children.length).toBe(2);
   });
+  it("doesn't allow submit without a title", () => {
+    const { container } = render(<Form uploadState={{ name: "" }} />);
+    // fireEvent.change(container.querySelector("#name"), {
+    //   target: { value: "" }
+    // });
+    const submitBtn = container.querySelector("#submit-btn");
+    expect(submitBtn).toBeDisabled();
+  });
 });
 
 describe("The preview component", () => {
-  let arryofImages = [Image];
+  let arryofImages = [];
+
+  beforeEach(() => {
+    arryofImages = [Image];
+  });
 
   it("renders nothing when no images were loaded", () => {
-    act(() => {
-      render(<Form />, container);
-    });
-    const previewGrid = document.querySelector(".preview-grid");
+    const { container } = render(<Form />);
+    const previewGrid = container.querySelector(".preview-grid");
 
     expect(previewGrid.children.length).toBe(0);
   });
   it("renders one image when one image is loaded", () => {
-    act(() => {
-      render(<Form uploadState={{ images: arryofImages }} />, container);
-    });
-    const previewGrid = document.querySelector(".preview-grid");
+    const { container } = render(
+      <Form uploadState={{ images: arryofImages }} />
+    );
+    const previewGrid = container.querySelector(".preview-grid");
 
     expect(previewGrid.children.length).toBe(1);
   });
@@ -57,10 +61,10 @@ describe("The preview component", () => {
     for (let i = 0; i < 8; i++) {
       arryofImages.push(Image);
     }
-    act(() => {
-      render(<Form uploadState={{ images: arryofImages }} />, container);
-    });
-    const previewGrid = document.querySelector(".preview-grid");
+    const { container } = render(
+      <Form uploadState={{ images: arryofImages }} />
+    );
+    const previewGrid = container.querySelector(".preview-grid");
 
     expect(previewGrid.children.length).toBe(9);
   });
@@ -68,10 +72,10 @@ describe("The preview component", () => {
     for (let i = 0; i < 12; i++) {
       arryofImages.push(Image);
     }
-    act(() => {
-      render(<Form uploadState={{ images: arryofImages }} />, container);
-    });
-    const previewGrid = document.querySelector(".preview-grid");
+    const { container } = render(
+      <Form uploadState={{ images: arryofImages }} />
+    );
+    const previewGrid = container.querySelector(".preview-grid");
 
     expect(previewGrid.children.length).toBe(9);
   });

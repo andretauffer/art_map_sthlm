@@ -1,16 +1,19 @@
-:root{
-    --glow-animation: glow 3s ease infinite;
-    --move-offset: move-offset 5s infinite linear;
+:root {
+  --glow-animation: glow 3s ease infinite;
+  --move-offset: move-offset 5s infinite linear;
 }
 
 @keyframes glow {
-    50%{
-      transform: scale(1.4);
-  } 
+  50% {
+    transform: scale(1.4);
+  }
 }
 
 @keyframes move-offset {
-    100%{
-        stroke-dashoffset: 100;
-    }
+  50% {
+    stroke-dashoffset: 100;
+  }
+  100% {
+    stroke-dashoffset: -100;
+  }
 }

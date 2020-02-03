@@ -28,7 +28,17 @@ export const readFile = image => {
     });
 };
 
+export const notification = { message: m => alert(m) };
+
+export const postRequest = obj => {
+  fetch("/api/items", { method: "POST", body: obj })
+    .then(res => console.log("notify success", res))
+    .catch(error => console.log("notify error", error));
+};
+
 export default {
   getImages,
-  readFile
+  readFile,
+  notification,
+  postRequest
 };
