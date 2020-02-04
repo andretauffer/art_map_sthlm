@@ -39,12 +39,13 @@ function InsertForm({ uploadUpdate, uploadState, fetcher }) {
     });
   };
 
-  const onClickSubmit = () => {
+  const onClickSubmit = async () => {
+    let response = [];
     name
-      ? postRequest({ name, latitude, longitude, images }).then(() =>
-          uploadUpdate({ method: "reset" })
-        )
+      ? (response = await postRequest({ name, latitude, longitude, images }))
       : notification.message("Please select a name first");
+
+    response && uploadUpdate({ method: "reset" });
   };
 
   return (

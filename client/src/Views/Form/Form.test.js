@@ -32,6 +32,8 @@ describe("The form component", () => {
     //   target: { value: "" }
     // });
     const submitBtn = container.querySelector("#submit-btn");
+    // fireEvent.click(submitBtn);
+    // expect(notification.message).toHaveBeenCalledTimes(1);
     expect(submitBtn).toBeDisabled();
   });
 });
