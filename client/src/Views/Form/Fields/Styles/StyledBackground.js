@@ -7,7 +7,7 @@ const InputSize = styled.svg`
   top: ${props => (props.top ? props.top : "0")};
   width: 100%;
   height: ${props => (props.extend ? "200px" : "60px")};
-  z-index: ${props => (props.extend && props.active ? "2" : "1")};
+  z-index: ${props => (props.extend && props.active ? "10" : "1")};
 `;
 
 export default ({ active, extend }) => (

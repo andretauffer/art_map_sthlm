@@ -10,7 +10,7 @@ export default styled.input`
   background-color: transparent;
   outline: none;
   bottom: 10px;
-  z-index: 10;
+  z-index: ${props => (props.active ? "12" : "5")};
 
   :focus {
     border-bottom: 5px solid var(--global-emerald-green);

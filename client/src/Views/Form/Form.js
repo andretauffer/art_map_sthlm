@@ -129,6 +129,13 @@ function InsertForm({ uploadUpdate, uploadState }) {
             placeholder="Street name and number"
             className="location"
             onChange={onTypeSearch}
+            clearOptions={() =>
+              uploadUpdate({
+                method: "input",
+                field: "adressOptions",
+                value: null
+              })
+            }
             {...{ optionsList: adressOptions }}
           />
           <Input
@@ -139,7 +146,6 @@ function InsertForm({ uploadUpdate, uploadState }) {
             placeholder="Select type"
             className="type"
             onChange={onTypeSearch}
-            {...{ optionsList: adressOptions }}
           />
           <Input
             id="keywords"
@@ -149,7 +155,6 @@ function InsertForm({ uploadUpdate, uploadState }) {
             placeholder="Nice, awesome, vibrant..."
             className="keywords"
             onChange={onTypeSearch}
-            {...{ optionsList: adressOptions }}
           />
           <Input
             id="start_date"

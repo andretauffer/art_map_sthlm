@@ -5,7 +5,8 @@ const initialState = {
   location: "",
   images: [],
   description: "",
-  preview: []
+  preview: [],
+  adressOptions: null
 };
 
 function uploadReducer(state, action) {

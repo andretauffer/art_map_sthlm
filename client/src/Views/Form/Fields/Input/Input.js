@@ -19,6 +19,7 @@ export default ({
   width,
   optionsList,
   extend,
+  clearOptions = () => {},
   ...props
 }) => {
   const [active, setActive] = useState(false);
@@ -40,7 +41,10 @@ export default ({
       {type === "textarea" ? (
         <TextArea
           onFocus={() => setActive(true)}
-          onBlur={() => setActive(false)}
+          onBlur={() => {
+            clearOptions() && clearOptions();
+            setActive(false);
+          }}
           {...{
             rows,
             active,
@@ -50,7 +54,7 @@ export default ({
             id,
             value,
             placeholder,
-            extend
+            extend: active && extend
           }}
           className={`input-${className}`}
           {...props}
@@ -58,7 +62,10 @@ export default ({
       ) : (
         <StyledInput
           onFocus={() => setActive(true)}
-          onBlur={() => setActive(false)}
+          onBlur={() => {
+            clearOptions();
+            setActive(false);
+          }}
           {...{
             rows,
             active,
