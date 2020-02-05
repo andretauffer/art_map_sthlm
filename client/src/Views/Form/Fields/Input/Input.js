@@ -3,6 +3,8 @@ import StyledInput from "../Styles/InputStyle";
 import StyledLabel from "../Styles/InputLabelStyle";
 import StyledContainer from "../Styles/StyledContainer";
 import StyledBackground from "../Styles/StyledBackground";
+import StyledSelection from "../Styles/StyledSelection";
+import TextArea from "../Styles/TextAreaStyle";
 
 export default ({
   id,
@@ -15,35 +17,72 @@ export default ({
   className,
   rows,
   width,
+  optionsList,
+  extend,
   ...props
 }) => {
   const [active, setActive] = useState(false);
 
   return (
     <StyledContainer>
-      <StyledLabel
-        {...{
-          className: `label-${className}`,
-          active
-        }}
-      >
-        {label}
-      </StyledLabel>
-      <StyledBackground {...{ width, active }} />
-      <StyledInput
-        onFocus={() => setActive(true)}
-        onBlur={() => setActive(false)}
-        placeholder={placeholder}
-        value={value}
-        id={id}
-        type={type}
-        name={name}
-        accept={accept}
-        {...{ rows, active }}
-        className={`input-${className}`}
-        {...props}
+      {!active && (
+        <StyledLabel
+          {...{
+            className: `label-${className}`
+          }}
+        >
+          {label}
+        </StyledLabel>
+      )}
+      <StyledBackground
+        {...{ width, active, extend: !!optionsList || extend }}
       />
-      {/* <StyledSelection /> */}
+      {type === "textarea" ? (
+        <TextArea
+          onFocus={() => setActive(true)}
+          onBlur={() => setActive(false)}
+          {...{
+            rows,
+            active,
+            accept,
+            name,
+            type,
+            id,
+            value,
+            placeholder,
+            extend
+          }}
+          className={`input-${className}`}
+          {...props}
+        />
+      ) : (
+        <StyledInput
+          onFocus={() => setActive(true)}
+          onBlur={() => setActive(false)}
+          {...{
+            rows,
+            active,
+            accept,
+            name,
+            type,
+            id,
+            value,
+            placeholder,
+            extend
+          }}
+          className={`input-${className}`}
+          {...props}
+        />
+      )}
+      {active && optionsList && (
+        <StyledSelection>
+          {optionsList.map((option, i) => (
+            <p
+              key={option.postalCode + i}
+            >{`${option.street} ${option.city} ${option.postalCode}`}</p>
+          ))}
+        </StyledSelection>
+      )}
     </StyledContainer>
   );
 };

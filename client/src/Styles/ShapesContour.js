@@ -9,7 +9,7 @@ const Shape = styled.path`
   stroke-linejoin: miter;
   fill: var(--global-white-color);
   :hover {
-    stroke: var(--global-dark-color);
+    stroke: var(--global-light-blue);
     animation: var(--move-offset);
   }
 `;

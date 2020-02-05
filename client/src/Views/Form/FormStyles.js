@@ -23,8 +23,8 @@ export const FormPlacer = styled.div`
 
 export const FormShape = styled.div`
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 80%;
+  left: 65%;
   transform: translate(-50%, -50%);
 `;
 
@@ -39,7 +39,7 @@ export const FormInputs = styled.div`
   margin: 0 auto;
   margin-top: 1em;
   padding: 1em 1em 1em 1em;
-  height: 40vh;
+  height: 700px;
   border-radius: 5px;
   border: 0;
   font-size: 20px;

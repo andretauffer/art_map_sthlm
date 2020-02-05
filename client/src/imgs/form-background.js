@@ -5,7 +5,7 @@ import { BigShapes } from "../Styles/ShapesContour";
 const FormSize = styled.svg`
   width: 250px;
   height: 350px;
-  transform: scale(2);
+  transform: scale(2.5);
 `;
 
 export default () => (
@@ -14,7 +14,7 @@ export default () => (
       <BigShapes
         stroke-dasharray="5,5"
         id="svg_4"
-        d="m23,8.4375l203,-0.4375l14,263l-230,59l13,-321.5625z"
+        d="m5,5.4375l176,8.5625c0,0.4375 38,308.4375 35,309.4375c-3,1 -213,26 -213,25.5625c0,0.4375 -1,-1.5625 2,-343.5625z"
         stroke-width="7"
         stroke="#9bb0db"
         fill="#7AD6CA"

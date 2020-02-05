@@ -25,7 +25,7 @@ describe("The form component", () => {
     expect(header.textContent).toBe("Title");
     expect(container.children.length).toBe(1);
     expect(container.firstChild.children.length).toBe(3);
-    expect(inputList.children.length).toBe(5);
+    expect(inputList.children.length).toBe(6);
     expect(formShape.children.length).toBe(2);
   });
   it("doesn't allow submit without a title", () => {

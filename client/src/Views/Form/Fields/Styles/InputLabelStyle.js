@@ -1,9 +1,11 @@
 import styled from "styled-components";
 
 export default styled.p`
+  position: absolute;
+  top: 10px;
+  left: 10px;
   font-size: 1em;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  margin: 5px 10px;
-  display: ${props => (props.active ? "none" : "block")};
+  z-index: 3;
 `;

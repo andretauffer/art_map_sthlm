@@ -40,7 +40,12 @@ function InsertForm({ uploadUpdate, uploadState }) {
     images,
     description,
     geolocation,
-    adressOptions
+    adressOptions,
+    type,
+    keywords,
+    startDate,
+    endDate,
+    url
   } = uploadState;
 
   let delaySearch;
@@ -133,16 +138,52 @@ function InsertForm({ uploadUpdate, uploadState }) {
             placeholder="Street name and number"
             className="location"
             onChange={onTypeSearch}
+            {...{ optionsList: adressOptions }}
           />
-          <div>
-            {adressOptions &&
-              fieldActive("input-location") &&
-              adressOptions.map((adress, i) => (
-                <p
-                  key={adress.postalCode + i}
-                >{`${adress.street} ${adress.city} ${adress.postalCode}`}</p>
-              ))}
-          </div>
+          <Input
+            id="type"
+            type="text"
+            value={type}
+            label="Type  "
+            placeholder="Select type"
+            className="type"
+            onChange={onTypeSearch}
+            {...{ optionsList: adressOptions }}
+          />
+          <Input
+            id="keywords"
+            type="text"
+            value={keywords}
+            label="Keywords  "
+            placeholder="Nice, awesome, vibrant..."
+            className="keywords"
+            onChange={onTypeSearch}
+            {...{ optionsList: adressOptions }}
+          />
+          <Input
+            id="start_date"
+            type="date"
+            value={startDate}
+            label="Start date  "
+            placeholder="starts in"
+            className="start_date"
+          />
+          <Input
+            id="end_date"
+            type="date"
+            value={endDate}
+            label="End date  "
+            placeholder="ends in"
+            className="end_date"
+          />
+          <Input
+            id="url"
+            type="text"
+            value={url}
+            label="Url "
+            placeholder="Put here the url to your amazing website!"
+            className="url"
+          />
           <Input
             id="description"
             type="textarea"
@@ -150,6 +191,7 @@ function InsertForm({ uploadUpdate, uploadState }) {
             label="description"
             rows="5"
             className="description"
+            extend={true}
             onChange={e =>
               uploadUpdate({
                 method: "input",

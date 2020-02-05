@@ -1,15 +1,18 @@
 import styled from "styled-components";
 
 export default styled.textarea`
-  min-height: 30px;
-  min-width: 100px;
-  max-width: 100%;
+  position: absolute;
+  height: ${props => (props.extend ? "160px" : "30px")};
+  width: 95%;
+  margin: 0 10px;
   border: none;
-  border-radius: 10px;
-  padding: 5px 5px;
-  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.23);
+  text-indent: 10px;
+  background-color: transparent;
+  outline: none;
+  bottom: -130px;
+  z-index: 10;
 
-  &.error {
-    border: 1px solid red;
+  :focus {
+    border-bottom: 5px solid var(--global-emerald-green);
   }
 `;
