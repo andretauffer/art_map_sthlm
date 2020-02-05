@@ -19,7 +19,7 @@ export default withNavState(({ navState, navDispatch }) => {
   const { map, gallery, form, login } = navState;
   return (
     <Router>
-      <Container>
+      <Container className="the container">
         <Nav />
         <Link to="/">
           <NavButton

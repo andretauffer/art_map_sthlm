@@ -97,14 +97,14 @@ function InsertForm({ uploadUpdate, uploadState }) {
   }, [location]);
 
   return (
-    <FormWrapper>
+    <FormWrapper className="form-wrapper">
       <Header className="form-header">Title</Header>
       <FormPlacer>
         <FormShape>
           <FormBackground />
         </FormShape>
         <FormInputs className="form-inputs toggle-light">
-          <Input
+          {/* <Input
             id="image"
             type="file"
             name="images"
@@ -113,7 +113,7 @@ function InsertForm({ uploadUpdate, uploadState }) {
             className="images"
             label="Images"
             multiple
-          />
+          /> */}
           <Input
             id="name"
             type="text"

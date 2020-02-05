@@ -13,6 +13,19 @@ export const Container = styled.div`
   }
 `;
 
+export const Nav = styled.div`
+  position: fixed;
+  z-index: 100;
+  top: 20px;
+  left: 20px;
+  fill: var(--global-white-color);
+  @media only screen and (max-width: 700px) {
+    top: -50px;
+    left: -80px;
+    transform: scale(0.7);
+  }
+`;
+
 export const IconBackground = styled.svg`
   position: absolute;
   top: 50%;

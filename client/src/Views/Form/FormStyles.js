@@ -1,14 +1,12 @@
 import styled from "styled-components";
 
 export const FormWrapper = styled.div`
-  margin: 10% 2%;
-  height: 80%;
-  width: 96%;
+  min-height: 1000px;
+  width: auto;
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
-
   @media only screen and (max-width: 700px) {
     flex-flow: column nowrap;
   }
@@ -18,13 +16,15 @@ export const Header = styled.h1``;
 
 export const FormPlacer = styled.div`
   position: relative;
-  width: 40%;
+  width: 100%;
+  height: 100%;
+  background-color: blue;
 `;
 
 export const FormShape = styled.div`
   position: absolute;
-  top: 80%;
-  left: 65%;
+  top: 60%;
+  left: 60%;
   transform: translate(-50%, -50%);
 `;
 
@@ -39,7 +39,7 @@ export const FormInputs = styled.div`
   margin: 0 auto;
   margin-top: 1em;
   padding: 1em 1em 1em 1em;
-  height: 700px;
+  height: 600px;
   border-radius: 5px;
   border: 0;
   font-size: 20px;

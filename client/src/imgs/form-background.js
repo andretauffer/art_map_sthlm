@@ -5,7 +5,7 @@ import { BigShapes } from "../Styles/ShapesContour";
 const FormSize = styled.svg`
   width: 250px;
   height: 350px;
-  transform: scale(2.5);
+  transform: scale(2.4);
 `;
 
 export default () => (

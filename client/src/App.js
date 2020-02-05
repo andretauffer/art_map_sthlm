@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { CookiesProvider } from "react-cookie";
 import "./App.css";
 import "./Views/Gallery.css";
-import "./Views/Form/Form.css";
 import "./Views/Map/Map.css";
 import "./Views/Login/Login.css";
 import backgroundGradFx from "./FX/LightToggle";
@@ -20,8 +19,8 @@ const ViewContainer = styled.div`
 function App() {
   return (
     <CookiesProvider>
-      <ViewContainer>
-        <ViewWrapper>
+      <ViewContainer className="view container">
+        <ViewWrapper className="view wrapper">
           <Nav />
         </ViewWrapper>
       </ViewContainer>
