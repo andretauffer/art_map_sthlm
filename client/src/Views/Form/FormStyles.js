@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const FormWrapper = styled.div`
-  min-height: 1000px;
+  height: calc(100vh - 100px);
   width: auto;
   display: flex;
   flex-flow: row nowrap;
