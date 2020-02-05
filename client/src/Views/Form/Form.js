@@ -98,22 +98,13 @@ function InsertForm({ uploadUpdate, uploadState }) {
 
   return (
     <FormWrapper className="form-wrapper">
-      <Header className="form-header">Title</Header>
+      {/* <Header className="form-header">Title</Header> */}
+      <FormBackground />
       <FormPlacer>
-        <FormShape>
+        {/* <FormShape>
           <FormBackground />
-        </FormShape>
+        </FormShape> */}
         <FormInputs className="form-inputs toggle-light">
-          {/* <Input
-            id="image"
-            type="file"
-            name="images"
-            accept=".png, .jpeg, .jpg"
-            onChange={onChangeAddImage}
-            className="images"
-            label="Images"
-            multiple
-          /> */}
           <Input
             id="name"
             type="text"
@@ -214,9 +205,24 @@ function InsertForm({ uploadUpdate, uploadState }) {
           </div>
         </FormInputs>
       </FormPlacer>
-      <FormPlacer>
+    </FormWrapper>
+  );
+}
+
+{
+  /* <FormPlacer>
         <FormShape className="form-shape">
           <PreviewBackground />
+          <Input
+            id="image"
+            type="file"
+            name="images"
+            accept=".png, .jpeg, .jpg"
+            onChange={onChangeAddImage}
+            className="images"
+            label="Images"
+            multiple
+          />
           <Previews className="preview-grid">
             {images &&
               images.length > 0 &&
@@ -248,9 +254,7 @@ function InsertForm({ uploadUpdate, uploadState }) {
               )}
           </Previews>
         </FormShape>
-      </FormPlacer>
-    </FormWrapper>
-  );
+      </FormPlacer> */
 }
 
 export default withFormState(InsertForm);

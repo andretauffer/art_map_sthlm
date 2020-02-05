@@ -11,19 +11,12 @@ import toggleOn from "./imgs/switch.svg";
 import Nav from "./Views/NavBar/NavBar";
 import ViewWrapper from "./Styles/ViewWrapper";
 
-const ViewContainer = styled.div`
-  height: 100vh;
-  width: 100vw;
-`;
-
 function App() {
   return (
     <CookiesProvider>
-      <ViewContainer className="view container">
-        <ViewWrapper className="view wrapper">
-          <Nav />
-        </ViewWrapper>
-      </ViewContainer>
+      <ViewWrapper className="view wrapper">
+        <Nav />
+      </ViewWrapper>
     </CookiesProvider>
   );
 }

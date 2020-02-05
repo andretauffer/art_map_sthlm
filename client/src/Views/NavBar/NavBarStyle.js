@@ -1,27 +1,27 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  position: fixed;
+  position: absolute;
   z-index: 100;
-  top: 20px;
-  left: 20px;
+  top: 0px;
+  left: 0px;
   fill: var(--global-white-color);
   @media only screen and (max-width: 700px) {
     top: -50px;
-    left: -80px;
+    left: -40px;
     transform: scale(0.7);
   }
 `;
 
 export const Nav = styled.div`
-  position: fixed;
+  position: absolute;
   z-index: 100;
   top: 20px;
   left: 20px;
   fill: var(--global-white-color);
   @media only screen and (max-width: 700px) {
     top: -50px;
-    left: -80px;
+    left: -40px;
     transform: scale(0.7);
   }
 `;
@@ -48,16 +48,16 @@ export const Icon = styled.i`
   text-align: center;
   font-size: ${props => (props.active ? "2.2rem" : "1.6rem")};
   animation: ${props =>
-    props.active ? "move-to-active 1s ease forwards" : ""};
+    props.active ? "move-to-active 3s ease forwards" : ""};
   @keyframes move-to-active {
     0% {
-      top: ${props => props.positionTop};
-      left: ${props => props.positionLeft};
-      transform: scale(0);
+      top: 200px;
+      left: 20px;
+      transform: scale(0.8);
     }
     100% {
-      top: 65px;
-      left: 170px;
+      top: 50px;
+      left: 320px;
       transform: scale(1.2);
     }
   }
@@ -65,7 +65,5 @@ export const Icon = styled.i`
     color: var(--global-dark-color);
   }
 
-  @media only screen and (max-width: 700px) {
-    color: ${props => (props.active ? "var(--global-dark-color)" : "")};
-  }
+  color: ${props => (props.active ? "var(--global-dark-color)" : "")};
 `;

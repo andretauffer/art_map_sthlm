@@ -1,6 +1,7 @@
 :root {
   --glow-animation: glow 3s ease infinite;
   --move-offset: move-offset 5s infinite linear;
+  --move-form-background: move-background 5s ease forwards;
 }
 
 @keyframes glow {
@@ -15,5 +16,19 @@
   }
   100% {
     stroke-dashoffset: -20;
+  }
+}
+
+@keyframes move-background {
+  0% {
+    top: 70%;
+  }
+  50% {
+    stroke-dashoffset: 60;
+  }
+  100% {
+    stroke-dashoffset: -20;
+    fill: black;
+    top: 350px;
   }
 }

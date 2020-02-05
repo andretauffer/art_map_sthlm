@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 export const FormWrapper = styled.div`
-  height: calc(100vh - 100px);
+  height: auto;
+  margin-top: 50px;
   width: auto;
   display: flex;
   flex-flow: row nowrap;
@@ -16,22 +17,24 @@ export const Header = styled.h1``;
 
 export const FormPlacer = styled.div`
   position: relative;
-  width: 100%;
-  height: 100%;
-  background-color: blue;
+  width: 550px;
+  height: 850px;
 `;
 
 export const FormShape = styled.div`
   position: absolute;
-  top: 60%;
+  top: 50%;
   left: 60%;
   transform: translate(-50%, -50%);
+  @media only screen and (max-width: 700px) {
+    animation: var(--move-form-background);
+  }
 `;
 
 export const FormInputs = styled.div`
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 38%;
+  left: 43%;
   transform: translate(-50%, -50%);
   display: flex;
   flex-flow: column nowrap;
@@ -43,10 +46,12 @@ export const FormInputs = styled.div`
   border-radius: 5px;
   border: 0;
   font-size: 20px;
-  max-width: 400px;
   width: 400px;
-  min-width: 300px;
   font-size: 10px;
+  @media only screen and (max-width: 700px) {
+    width: 300px;
+    left: 50%;
+  }
 `;
 
 export const Previews = styled.div`
