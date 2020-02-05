@@ -1,16 +1,18 @@
 import React from "react";
-import { render, fireEvent, findByLabelText } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Image from "../../imgs/login.png";
 
 import Form from "./Form";
 import Services from "../../Services/HOC";
+
 const {
   FormHOCs: {
     FormContainer: { notification }
   }
 } = Services;
 
+jest.spyOn(notification, "message").mockImplementation(() => {});
 jest.spyOn(notification, "message").mockImplementation(() => {});
 
 describe("The form component", () => {
@@ -23,17 +25,12 @@ describe("The form component", () => {
     expect(header.textContent).toBe("Title");
     expect(container.children.length).toBe(1);
     expect(container.firstChild.children.length).toBe(3);
-    expect(inputList.children.length).toBe(6);
+    expect(inputList.children.length).toBe(5);
     expect(formShape.children.length).toBe(2);
   });
   it("doesn't allow submit without a title", () => {
     const { container } = render(<Form uploadState={{ name: "" }} />);
-    // fireEvent.change(container.querySelector("#name"), {
-    //   target: { value: "" }
-    // });
     const submitBtn = container.querySelector("#submit-btn");
-    // fireEvent.click(submitBtn);
-    // expect(notification.message).toHaveBeenCalledTimes(1);
     expect(submitBtn).toBeDisabled();
   });
 });

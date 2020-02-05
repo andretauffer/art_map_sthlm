@@ -4,8 +4,6 @@ export default styled.p`
   font-size: 1em;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-
-  &.add-form {
-    width: 40%;
-  }
+  margin: 5px 10px;
+  display: ${props => (props.active ? "none" : "block")};
 `;

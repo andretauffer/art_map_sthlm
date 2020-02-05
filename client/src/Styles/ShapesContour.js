@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Shape = styled.path`
-  stroke: var(--global-dark-color);
+  stroke: var(--global-white-color);
   stroke-dasharray: 7;
   stroke-width: 7px;
   stroke-miterlimit: 10;
@@ -10,6 +10,21 @@ const Shape = styled.path`
   fill: var(--global-white-color);
   :hover {
     stroke: var(--global-dark-color);
+    animation: var(--move-offset);
+  }
+`;
+
+const InputShape = styled.rect`
+  stroke: ${props =>
+    props.active ? "var(--global-emerald-green)" : "var(--global-white-color)"};
+  stroke-dasharray: 7;
+  stroke-width: 7px;
+  stroke-miterlimit: 10;
+  stroke-linejoin: miter;
+  fill: var(--global-white-color);
+  animation: ${props => (props.active ? "var(--move-offset)" : null)};
+  :hover {
+    stroke: var(--global-emerald-green);
     animation: var(--move-offset);
   }
 `;
@@ -73,3 +88,4 @@ export const Circle = ({ active, ...props }) => (
 export const CircleSmaller = ({ ...props }) => (
   <SmallerCircle cx="25" cy="25" r="20" {...props} />
 );
+export const InputRectangle = ({ ...props }) => <InputShape {...props} />;

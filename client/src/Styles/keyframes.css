@@ -11,9 +11,9 @@
 
 @keyframes move-offset {
   50% {
-    stroke-dashoffset: 100;
+    stroke-dashoffset: 60;
   }
   100% {
-    stroke-dashoffset: -100;
+    stroke-dashoffset: -20;
   }
 }

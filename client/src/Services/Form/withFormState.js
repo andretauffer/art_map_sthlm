@@ -2,8 +2,7 @@ import React, { useReducer } from "react";
 
 const initialState = {
   name: "",
-  longitude: "",
-  latitude: "",
+  location: "",
   images: [],
   description: "",
   preview: []

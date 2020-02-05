@@ -2,7 +2,8 @@ import styled from "styled-components";
 
 export default styled.div`
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: column nowrap;
   justify-content: space-between;
-  align-items: center;
+  position: relative;
+  height: 60px;
 `;

@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Services from "../../Services/HOC";
-import addMarker from "../Map/Map";
 import Fields from "./Fields/Fields";
 import FormBackground from "../../imgs/form-background";
 import PreviewBackground from "../../imgs/preview-background";
@@ -20,15 +19,31 @@ import { CircleSmaller } from "../../Styles/ShapesContour";
 
 const {
   FormHOCs: {
-    FormContainer: { getImages, readFile, notification, postRequest },
+    FormContainer: {
+      getImages,
+      readFile,
+      notification,
+      postRequest,
+      getAdresses,
+      parseLocation,
+      parseResponse
+    },
     withFormState
-  },
-  CommonLogic: { withFetch }
+  }
 } = Services;
 const { Input } = Fields;
 
-function InsertForm({ uploadUpdate, uploadState, fetcher }) {
-  const { name, longitude, latitude, images, description } = uploadState;
+function InsertForm({ uploadUpdate, uploadState }) {
+  const {
+    name,
+    location,
+    images,
+    description,
+    geolocation,
+    adressOptions
+  } = uploadState;
+
+  let delaySearch;
 
   const onChangeAddImage = e => {
     const images = [];
@@ -39,14 +54,42 @@ function InsertForm({ uploadUpdate, uploadState, fetcher }) {
     });
   };
 
+  const onTypeSearch = e => {
+    clearTimeout(delaySearch);
+    uploadUpdate({
+      method: "input",
+      field: "location",
+      value: e.target.value
+    });
+  };
+
+  const fieldActive = className =>
+    document.querySelector(`.${className}`) === document.activeElement;
+
   const onClickSubmit = async () => {
     let response = [];
     name
-      ? (response = await postRequest({ name, latitude, longitude, images }))
+      ? (response = await postRequest({ name, location, images }))
       : notification.message("Please select a name first");
 
     response && uploadUpdate({ method: "reset" });
   };
+  useEffect(() => {
+    const element = document.querySelector(".input-name");
+    element.focus();
+  }, []);
+
+  useEffect(() => {
+    if (!!location)
+      delaySearch = setTimeout(async () => {
+        let value = await getAdresses(parseLocation(location));
+        uploadUpdate({
+          method: "input",
+          field: "adressOptions",
+          value: parseResponse(value)
+        });
+      }, 3000);
+  }, [location]);
 
   return (
     <FormWrapper>
@@ -62,7 +105,7 @@ function InsertForm({ uploadUpdate, uploadState, fetcher }) {
             name="images"
             accept=".png, .jpeg, .jpg"
             onChange={onChangeAddImage}
-            className="add-form images"
+            className="images"
             label="Images"
             multiple
           />
@@ -71,7 +114,9 @@ function InsertForm({ uploadUpdate, uploadState, fetcher }) {
             type="text"
             value={name}
             label="Name  "
-            className="add-form"
+            className="name"
+            active={value => fieldActive(value)}
+            placeholder="The event or image title"
             onChange={e =>
               uploadUpdate({
                 method: "input",
@@ -81,40 +126,30 @@ function InsertForm({ uploadUpdate, uploadState, fetcher }) {
             }
           />
           <Input
-            id="longitude"
+            id="location"
             type="text"
-            value={longitude}
-            label="Longitude "
-            className="add-form"
-            onChange={e =>
-              uploadUpdate({
-                method: "input",
-                field: "longitude",
-                value: e.target.value
-              })
-            }
+            value={location}
+            label="Location  "
+            placeholder="Street name and number"
+            className="location"
+            onChange={onTypeSearch}
           />
-          <Input
-            id="latitude"
-            type="text"
-            value={latitude}
-            label="latitude "
-            className="add-form"
-            onChange={e =>
-              uploadUpdate({
-                method: "input",
-                field: "latitude",
-                value: e.target.value
-              })
-            }
-          />
+          <div>
+            {adressOptions &&
+              fieldActive("input-location") &&
+              adressOptions.map((adress, i) => (
+                <p
+                  key={adress.postalCode + i}
+                >{`${adress.street} ${adress.city} ${adress.postalCode}`}</p>
+              ))}
+          </div>
           <Input
             id="description"
-            type="text"
+            type="textarea"
             value={description}
             label="description"
             rows="5"
-            className="add-form description"
+            className="description"
             onChange={e =>
               uploadUpdate({
                 method: "input",
@@ -130,6 +165,7 @@ function InsertForm({ uploadUpdate, uploadState, fetcher }) {
               value="send"
               onClick={onClickSubmit}
               disabled={!name}
+              className="request-button"
             >
               Add to the list
             </button>
@@ -175,4 +211,4 @@ function InsertForm({ uploadUpdate, uploadState, fetcher }) {
   );
 }
 
-export default Services.Composer(withFormState, withFetch)(InsertForm);
+export default withFormState(InsertForm);

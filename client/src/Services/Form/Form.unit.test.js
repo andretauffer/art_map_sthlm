@@ -5,7 +5,8 @@ import {
   getImages,
   readFile,
   notification,
-  postRequest
+  postRequest,
+  parseLocation
 } from "./FormContainer";
 
 jest.spyOn(window, "alert").mockImplementation(() => {});
@@ -100,5 +101,25 @@ describe("The postRequest function", () => {
     await postRequest({ name: "aa" }).catch();
     expect(notification.message).toHaveBeenCalledTimes(1);
     expect(notification.message).toHaveBeenCalledWith("Rejected request");
+  });
+});
+describe("The parseLocation function", () => {
+  it("should return a street name when there is only name", () => {
+    const call = parseLocation("Aspnasvagen");
+    expect(call.street).toBe("ASPNASVAGEN");
+  });
+  it("should return a street name when there is only name without extra spaces", () => {
+    const call = parseLocation("Aspnasvagen ");
+    expect(call.street).toBe("ASPNASVAGEN");
+  });
+  it("should return a street name and number without extra spaces", () => {
+    const call = parseLocation("Aspnasvagen 38   23123");
+    expect(call.street).toBe("ASPNASVAGEN");
+    expect(call.number).toBe("38");
+  });
+  it("should return the full street name and number without extra spaces", () => {
+    const call = parseLocation("avenida carlos moreira lima 588");
+    expect(call.street).toBe("AVENIDA CARLOS MOREIRA LIMA");
+    expect(call.number).toBe("588");
   });
 });

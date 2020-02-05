@@ -1,24 +1,21 @@
 import styled from "styled-components";
 
 export default styled.input`
-  min-height: 30px;
-  min-width: 100px;
-  max-width: 100%;
+  position: absolute;
+  height: 30px;
+  width: 95%;
+  margin: 0 10px;
   border: none;
-  border-radius: 10px;
-  padding: 5px 5px;
-  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.23);
+  text-indent: 10px;
+  background-color: transparent;
+  outline: none;
+  bottom: 10px;
+
+  :focus {
+    border-bottom: 5px solid var(--global-emerald-green);
+  }
 
   &.error {
     border: 1px solid red;
-  }
-
-  &.add-form {
-    width: 100%;
-  }
-
-  &.description {
-    height: 300%;
-    transform: translateY(30%);
   }
 `;

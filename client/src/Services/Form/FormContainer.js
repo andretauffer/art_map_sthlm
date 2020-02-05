@@ -38,9 +38,46 @@ export const postRequest = obj => {
     : notification.message("Please fill in the name field");
 };
 
+export const getAdresses = location => {
+  const { street, number } = location;
+  console.log("street", street);
+  return !!street
+    ? fetch(`/api/items/adress?street=${street}&number=${number}`)
+        .then(data => data.json())
+        .catch(error => notification.message(error))
+    : notification.message("Please fill in the location field");
+};
+
+export const parseResponse = response => {
+  let parsed = [];
+  response.forEach(adress => {
+    console.log(adress);
+    const street = adress.street;
+    const city = adress.adminArea5;
+    const postalCode = adress.postalCode;
+    const geocode = adress.latLng;
+    parsed.push({ street, city, postalCode, geocode });
+  });
+  return parsed;
+};
+
+export const parseLocation = location => {
+  const street = location.toUpperCase().match(/([A-Z]+\s*)+/g)
+    ? location
+        .toUpperCase()
+        .match(/([A-Z]+\s*)+/g)[0]
+        .trim()
+    : null;
+  const number = location.match(/[0-9]+/g) ? location.match(/[0-9]+/g)[0] : 0;
+  return { street, number };
+};
+
 export default {
   getImages,
   readFile,
   notification,
-  postRequest
+  postRequest,
+  getAdresses,
+  parseLocation,
+  parseResponse
 };
