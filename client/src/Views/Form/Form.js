@@ -13,7 +13,9 @@ import {
   PreviewBox,
   DeleteButton,
   ButtonBackground,
-  Header
+  Header,
+  Button,
+  ButtonsContainer
 } from "./FormStyles";
 import { CircleSmaller } from "../../Styles/ShapesContour";
 
@@ -88,22 +90,19 @@ function InsertForm({ uploadUpdate, uploadState }) {
     if (!!location)
       delaySearch = setTimeout(async () => {
         let value = await getAdresses(parseLocation(location));
+        const response = value ? parseResponse(value) : [];
         uploadUpdate({
           method: "input",
           field: "adressOptions",
-          value: parseResponse(value)
+          value: response
         });
       }, 3000);
   }, [location]);
 
   return (
     <FormWrapper className="form-wrapper">
-      {/* <Header className="form-header">Title</Header> */}
       <FormBackground />
       <FormPlacer>
-        {/* <FormShape>
-          <FormBackground />
-        </FormShape> */}
         <FormInputs className="form-inputs toggle-light">
           <Input
             id="name"
@@ -196,8 +195,8 @@ function InsertForm({ uploadUpdate, uploadState }) {
               })
             }
           />
-          <div className="buttons-container">
-            <button
+          <ButtonsContainer className="buttons-container">
+            <Button
               id="submit-btn"
               type="button"
               value="send"
@@ -206,8 +205,8 @@ function InsertForm({ uploadUpdate, uploadState }) {
               className="request-button"
             >
               Add to the list
-            </button>
-          </div>
+            </Button>
+          </ButtonsContainer>
         </FormInputs>
       </FormPlacer>
     </FormWrapper>

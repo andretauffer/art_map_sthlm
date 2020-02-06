@@ -1,4 +1,18 @@
 const { pool } = require("../db");
+const fetch = require("node-fetch");
+
+const mapKey = process.env.MAP_KEY;
+const mapUrl = `http://open.mapquestapi.com/geocoding/v1/address?key=${mapKey}&`;
+
+const getByLocation = (street, number) =>
+  fetch(
+    `${mapUrl}location=Stockholm%2C+SE%2C+${street}%2C+${number}&thumbMaps=true&maxResults=5`,
+    {
+      method: "GET"
+    }
+  )
+    .then(data => data.json())
+    .catch(error => console.log(error));
 
 const insertItem = item =>
   pool
@@ -25,5 +39,6 @@ const insertRelation = relation =>
 module.exports = {
   insertItem,
   insertImage,
-  insertRelation
+  insertRelation,
+  getByLocation
 };

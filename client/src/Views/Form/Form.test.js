@@ -22,7 +22,6 @@ describe("The form component", () => {
     const inputList = container.querySelector(".form-inputs");
     const formShape = container.querySelector(".form-shape");
 
-    expect(header.textContent).toBe("Title");
     expect(container.children.length).toBe(1);
     expect(container.firstChild.children.length).toBe(3);
     expect(inputList.children.length).toBe(6);

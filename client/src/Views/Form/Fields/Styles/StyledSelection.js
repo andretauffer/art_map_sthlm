@@ -7,4 +7,5 @@ export default styled.div`
   z-index: 11;
   display: flex;
   flex-flow: column nowrap;
+  max-height: 150px;
 `;

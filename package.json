@@ -13,6 +13,7 @@
     "db:create-mock": "npm run db:reset-tables && npm run db:add-mock",
     "db:reset": "npm run db:create-mock && npm run db:reset-session-store",
     "build": "react-scripts build",
+    "e2e": "cd client && npm run cypress",
     "test": "cd client && npm run test",
     "eject": "react-scripts eject"
   },
@@ -33,6 +34,8 @@
   },
   "proxy": "http://localhost:5000",
   "dependencies": {
+    "@testing-library/jest-dom": "^5.1.0",
+    "@testing-library/react": "^9.4.0",
     "apicache": "^1.5.2",
     "archiver": "^3.1.1",
     "atob": "^2.1.2",
@@ -41,16 +44,17 @@
     "express": "^4.17.1",
     "express-redis-cache": "^1.1.3",
     "express-session": "^1.16.2",
+    "jsonwebtoken": "^8.5.1",
     "multer": "^1.4.2",
     "node-fetch": "^2.6.0",
     "passport": "^0.4.0",
     "passport-github2": "^0.1.11",
     "pg": "^7.12.1",
     "universal-cookie": "^4.0.2",
-    "uuid": "^3.3.3",
-    "jsonwebtoken": "^8.5.1"
+    "uuid": "^3.3.3"
   },
   "devDependencies": {
+    "canvas": "^2.6.1",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "dotenv": "^8.1.0",

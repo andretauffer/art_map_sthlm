@@ -24,55 +24,55 @@ app.use((req, res, next) => {
   next();
 });
 
-async function fetchData() {
-  await pool.query(`create table if not exists Users (
-        id serial primary key,
-        username varchar not null,
-        password varchar not null,
-        name varchar not null,
-        admin boolean not null
-        );`);
-  const res = await pool.query("select * from Users");
-  console.log(res);
-  return res;
-}
+// async function fetchData() {
+//   await pool.query(`create table if not exists Users (
+//         id serial primary key,
+//         username varchar not null,
+//         password varchar not null,
+//         name varchar not null,
+//         admin boolean not null
+//         );`);
+//   const res = await pool.query("select * from Users");
+//   console.log(res);
+//   return res;
+// }
 
-app.get("/", (req, res) => res.send("Hello World!"));
+// app.get("/", (req, res) => res.send("Hello World!"));
 
-app.get("/getList", async (req, res) => {
-  console.log("list");
-  var list = await fetchData();
-  console.log(list);
-  res.send(list.rows);
-});
+// app.get("/getList", async (req, res) => {
+//   console.log("list");
+//   var list = await fetchData();
+//   console.log(list);
+//   res.send(list.rows);
+// });
 
-//reinitiates the users table
-app.get("/refreshUsersTable", async (req, res) => {
-  await pool.query("DROP TABLE if exists Users");
+// //reinitiates the users table
+// app.get("/refreshUsersTable", async (req, res) => {
+//   await pool.query("DROP TABLE if exists Users");
 
-  await pool.query(`create table if not exists Users (
-        id serial primary key,
-        username varchar not null unique,
-        password varchar not null,
-        name varchar not null,
-        admin boolean not null
-        );`);
+//   await pool.query(`create table if not exists Users (
+//         id serial primary key,
+//         username varchar not null unique,
+//         password varchar not null,
+//         name varchar not null,
+//         admin boolean not null
+//         );`);
 
-  await pool.query(
-    `insert into Users(username, password, name, admin) values ('admin', 'secret', 'Admin', 'true')`
-  );
+//   await pool.query(
+//     `insert into Users(username, password, name, admin) values ('admin', 'secret', 'Admin', 'true')`
+//   );
 
-  var list = await fetchData();
-  console.log(list);
-  res.send(list.rows);
+//   var list = await fetchData();
+//   console.log(list);
+//   res.send(list.rows);
 
-  // res.end();
-});
+//   // res.end();
+// });
 
-app.get("/deleteUsers", async (req, res) => {
-  await pool.query("DROP TABLE Users");
-  res.end();
-});
+// app.get("/deleteUsers", async (req, res) => {
+//   await pool.query("DROP TABLE Users");
+//   res.end();
+// });
 
 // Routes
 

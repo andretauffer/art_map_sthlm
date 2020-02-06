@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const FormWrapper = styled.div`
   height: auto;
-  margin-top: 50px;
   width: auto;
   display: flex;
   flex-flow: row nowrap;
@@ -42,7 +41,7 @@ export const FormInputs = styled.div`
   margin: 0 auto;
   margin-top: 1em;
   padding: 1em 1em 1em 1em;
-  height: 600px;
+  height: auto;
   border-radius: 5px;
   border: 0;
   font-size: 20px;
@@ -106,4 +105,10 @@ export const ImagePreview = styled.img`
   text-align: center;
   align-self: center;
   margin: 0 auto;
+`;
+
+export const Button = styled.button``;
+
+export const ButtonsContainer = styled.div`
+  margin-top: 150px;
 `;

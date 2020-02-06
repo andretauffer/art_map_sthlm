@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { BigShapes } from "../Styles/ShapesContour";
 
 const FormSize = styled.svg`
-  position: fixed;
+  position: absolute;
   top: 300px;
   left: 500px;
   width: 580px;

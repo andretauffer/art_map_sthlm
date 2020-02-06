@@ -40,18 +40,20 @@ export const postRequest = obj => {
 
 export const getAdresses = location => {
   const { street, number } = location;
-  console.log("street", street);
+  if (!street && !number) {
+    return notification.message("Please use alphanumeric characters");
+  }
   return !!street
     ? fetch(`/api/items/adress?street=${street}&number=${number}`)
         .then(data => data.json())
         .catch(error => notification.message(error))
-    : notification.message("Please fill in the location field");
+    : notification.message("Please add a street name field");
 };
 
 export const parseResponse = response => {
+  console.log(response);
   let parsed = [];
   response.forEach(adress => {
-    console.log(adress);
     const street = adress.street;
     const city = adress.adminArea5;
     const postalCode = adress.postalCode;
